@@ -1,14 +1,16 @@
+from keras.layers.normalization import BatchNormalization
 from keras.layers.merge import Concatenate
 from keras.layers.core import Lambda
+from keras.layers.core import Dense
 from keras.layers import Input
 from keras.models import Model
 from keras import backend as K
 
-from lowlevelFN import llfn
-from midlevelFN import mlfn
-from classifierN import clf
-from globalFN import gfn
-from colorN import color
+from LowLevelFeatureNet import llfn
+from MidLevelFeatureNet import mlfn
+from ClassifierNet import clf
+from GlobalFeatureNet import gfn
+from ColorNet import color
 
 
 def tile(x):
@@ -27,7 +29,10 @@ def model():
     class_branch = llfn()(class_input)
     class_branch = gfn()(class_branch)
 
-    color_branch = Concatenate()([color_branch, Lambda(tile)(class_branch)])
+    gfn_units = Dense(units=256, activation='relu')(class_branch)
+    gfn_units = BatchNormalization()(gfn_units)
+
+    color_branch = Concatenate()([color_branch, Lambda(tile)(gfn_units)])
     color_branch = color()(color_branch)
 
     class_branch = clf()(class_branch)
