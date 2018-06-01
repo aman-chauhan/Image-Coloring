@@ -35,7 +35,7 @@ class DataGenerator(Sequence):
         y = np.empty((self.batch_size), dtype=int)
 
         for i, ID in enumerate(list_IDs_temp):
-            X[i, ] = np.load(np.expand_dims(imread(os.path.join(os.path.join('data', self.partition), ID)), axis=-1))
-            Y[i, ] = np.load(imread(os.path.join(os.path.join('data', self.partition + '-target'), ID)))
+            X[i] = np.expand_dims(imread(os.path.join(os.path.join('data', self.partition), ID)), axis=-1)
+            Y[i] = imread(os.path.join(os.path.join('data', self.partition + '-target'), ID))
             y[i] = self.labels[ID]
             return ([X, X], [Y, to_categorical(y, num_classes=self.n_classes)])

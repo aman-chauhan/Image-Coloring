@@ -1,8 +1,21 @@
+from keras.callbacks import Callback
+from keras.utils import multi_gpu_model
 from generator import DataGenerator
 from CNN import FullNetwork
+import tensorflow as tf
 import json
 import sys
 import os
+
+
+class SaveCallback(Callback):
+    def __init__(self, model):
+        self.model_to_save = model
+
+    def on_epoch_end(self, epoch, logs=None):
+        self.model_to_save.save('weights.h5')
+        d = {'epoch': epoch}
+        json.dump(d, open('epochs.json', 'w'))
 
 
 def main():
@@ -18,9 +31,22 @@ def main():
     training_generator = DataGenerator(partition['training'], 'training', labels, 16, 1, n_classes, True)
     validation_generator = DataGenerator(partition['validation'], 'validation', labels, 16, 1, n_classes, True)
 
-    model = FullNetwork.model()
-    model.compile(optimizer='adadelta', loss={
-                  'color_model': 'mean_squared_error', 'clf_model': 'binary_crossentropy'})
+    model = None
+    with tf.device('/cpu:0'):
+        model = FullNetwork.model()
+    if os.path.exists('weights.h5'):
+        model.load_weights('weights.h5')
+
+    initial_epoch = 0
+    if os.path.exists('epochs.json'):
+        initial_epoch = json.load(open('epochs.json'))['epoch']
+
+    cbk = SaveCallback(model)
+    parallel_model = multi_gpu_model(model, gpus=2)
+    parallel_model.compile(optimizer='adadelta', loss={
+        'color_model': 'mean_squared_error', 'clf_model': 'binary_crossentropy'})
+    parallel_model.fit_generator(generator=training_generator, epochs=1000, callbacks=[
+                                 cbk], validation_data=validation_generator, use_multiprocessing=True, workers=4, initial_epoch=initial_epoch)
 
 
 if __name__ == '__main__':
