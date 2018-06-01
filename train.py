@@ -1,5 +1,5 @@
 from generator import DataGenerator
-import models
+from CNN import FullNetwork
 import json
 import sys
 import os
@@ -20,7 +20,7 @@ def main():
 
     model = FullNetwork.model()
     model.compile(optimizer='adadelta', loss={
-                  'color_outout': 'mean_squared_error', 'clf_output': 'binary_crossentropy'})
+                  'color_model': 'mean_squared_error', 'clf_model': 'binary_crossentropy'})
 
 
 if __name__ == '__main__':

@@ -6,11 +6,11 @@ from keras.layers import Input
 from keras.models import Model
 from keras import backend as K
 
-from LowLevelFeatureNet import llfn
-from MidLevelFeatureNet import mlfn
-from ClassifierNet import clf
-from GlobalFeatureNet import gfn
-from ColorNet import color
+from .LowLevelFeatureNet import llfn
+from .MidLevelFeatureNet import mlfn
+from .ClassifierNet import clf
+from .GlobalFeatureNet import gfn
+from .ColorNet import color
 
 
 def tile(x):
