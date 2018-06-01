@@ -28,6 +28,12 @@ def main():
     print('Indices read.')
 
     n_classes = len({labels[x] for x in labels})
+    l = {labels[x] for x in labels}
+    l = {x: i for i, x in enumerate(sorted(list(l)))}
+    labels = {x: l[labels[x]] for x in labels.keys()}
+    json.dump(l, open('mapping.json', 'w'))
+    print('Mappings written.')
+
     training_generator = DataGenerator(partition['training'], 'training', labels, 16, 1, n_classes, True)
     validation_generator = DataGenerator(partition['validation'], 'validation', labels, 16, 1, n_classes, True)
 
@@ -47,6 +53,7 @@ def main():
         'color_model': 'mean_squared_error', 'clf_model': 'binary_crossentropy'})
     parallel_model.fit_generator(generator=training_generator, epochs=1000, callbacks=[
                                  cbk], validation_data=validation_generator, use_multiprocessing=True, workers=4, initial_epoch=initial_epoch)
+    print('Training done.')
 
 
 if __name__ == '__main__':
