@@ -30,7 +30,7 @@ class DataGenerator(Sequence):
         return self.__data_generation(list_IDs_temp)
 
     def __data_generation(self, list_IDs_temp):
-        X = np.empty((self.batch_size, 224, 224, self.n_channels))
+        X = np.empty((self.batch_size, 224, 224, self.n_channel))
         Y = np.empty((self.batch_size, 224, 224, 3))
         y = np.empty((self.batch_size), dtype=int)
 
