@@ -39,10 +39,11 @@ def main(source, dest):
             hash = (60 * i) // len(partition[x])
             img = imread(partition[x][i])
             if not os.path.exists(os.path.join(os.path.join(dest, x), partition[x][i].split(os.sep)[-1])):
-                imwrite(os.path.join(os.path.join(dest, x), partition[x][i].split(os.sep)[-1]), img)
+                imwrite(os.path.join(os.path.join(dest, x), partition[x][i].split(
+                    os.sep)[-1]), img_as_ubyte(color.rgb2gray(img)))
             if not os.path.exists(os.path.join(os.path.join(dest, 'target-' + x), partition[x][i].split(os.sep)[-1])):
                 imwrite(os.path.join(os.path.join(dest, 'target-' + x),
-                                     partition[x][i].split(os.sep)[-1]), img_as_ubyte(color.rgb2gray(img)))
+                                     partition[x][i].split(os.sep)[-1]), img)
             if not os.path.exists(os.path.join(os.path.join(dest, 'class-' + x), partition[x][i].split(os.sep)[-1])):
                 imwrite(os.path.join(os.path.join(dest, 'class-' + x),
                                      partition[x][i].split(os.sep)[-1]), img_as_ubyte(resize(img, (224, 224, 3))))

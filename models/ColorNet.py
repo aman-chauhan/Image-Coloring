@@ -36,7 +36,8 @@ def color():
     color_conv5 = BatchNormalization()(color_conv5)
 
     # Convolutional Layer with 2 3x3 kernels with single stride and same padding
-    color_conv6 = Conv2D(filters=2, kernel_size=3, strides=1, padding='same', activation='sigmoid')(color_conv5)
+    color_conv6 = Conv2D(filters=2, kernel_size=3, strides=1, padding='same',
+                         activation='sigmoid', name='color_output')(color_conv5)
 
     # Model definition
     color_model = Model(inputs=color_input, outputs=color_conv6, name='color_model')

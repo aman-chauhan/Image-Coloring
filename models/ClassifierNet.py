@@ -13,7 +13,7 @@ def clf():
     clf_fcon1 = BatchNormalization()(clf_fcon1)
 
     # Fully Connected Layer with 'output' units
-    clf_fcon2 = Dense(units=871, activation='softmax')(clf_fcon1)
+    clf_fcon2 = Dense(units=871, activation='softmax', name='clf_output')(clf_fcon1)
 
     # Model definition
     clf_model = Model(inputs=clf_input, outputs=clf_fcon2, name='clf_model')
