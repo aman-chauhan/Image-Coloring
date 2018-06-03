@@ -13,10 +13,10 @@ from .GlobalFeatureNet import gfn
 from .ColorNet import color
 
 
-def tile(x):
+def tile(x, k):
     x = K.expand_dims(x, 1)
     x = K.expand_dims(x, 1)
-    x = K.tile(x, [1, -1, -1, 1])
+    x = K.tile(x, [1, k[1], k[2], 1])
     return x
 
 
@@ -32,7 +32,7 @@ def model():
     gfn_units = Dense(units=256, activation='relu')(class_branch)
     gfn_units = BatchNormalization()(gfn_units)
 
-    color_branch = Concatenate()([color_branch, Lambda(tile)(gfn_units)])
+    color_branch = Concatenate()([color_branch, Lambda(tile,arguments={'k':K.shape(color_branch)})(gfn_units)])
     color_branch = color()(color_branch)
 
     class_branch = clf()(class_branch)

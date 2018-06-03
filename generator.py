@@ -1,4 +1,5 @@
 from keras.utils import Sequence, to_categorical
+from skimage.color import rgb2lab
 from imageio import imread
 import numpy as np
 import os
@@ -31,11 +32,12 @@ class DataGenerator(Sequence):
 
     def __data_generation(self, list_IDs_temp):
         X = np.empty((self.batch_size, 224, 224, self.n_channel))
-        Y = np.empty((self.batch_size, 224, 224, 3))
-        y = np.empty((self.batch_size), dtype=int)
+        Y = np.empty((self.batch_size, 224, 224, 2))
+        y = np.empty((self.batch_size,), dtype=int)
 
         for i, ID in enumerate(list_IDs_temp):
             X[i] = np.expand_dims(imread(os.path.join(os.path.join('data', self.partition), ID)), axis=-1)
-            Y[i] = imread(os.path.join(os.path.join('data', self.partition + '-target'), ID))
+            Y[i] = (rgb2lab(imread(os.path.join(os.path.join('data', self.partition + '-target'), ID)))
+                    [:, :, 1:] + 128.0) / (255.0)
             y[i] = self.labels[ID]
-            return ([X, X], [Y, to_categorical(y, num_classes=self.n_classes)])
+        return ([X, X], [Y, to_categorical(y, num_classes=self.n_classes)])
