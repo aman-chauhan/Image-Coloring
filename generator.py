@@ -1,3 +1,4 @@
+from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import Sequence, to_categorical
 from skimage.color import rgb2lab
 from imageio import imread
@@ -6,15 +7,21 @@ import os
 
 
 class DataGenerator(Sequence):
-    def __init__(self, list_IDs, partition, labels, batch_size=16, n_channel=1, n_classes=871, shuffle=True):
-        self.list_IDs = list_IDs
+    def __init__(self, list_IDs, partition, labels, batch_size=16, n_channel=1, n_classes=871, shuffle=True, augment=False):
+        if augment:
+            self.list_IDs = list_IDs * 5
+        else:
+            self.list_IDs = list_IDs
         self.labels = labels
         self.batch_size = batch_size
         self.n_channel = n_channel
         self.n_classes = n_classes
         self.shuffle = shuffle
+        self.augment = augment
         self.partition = partition
         self.prng = np.random.RandomState(42)
+        self.datagen = ImageDataGenerator(rotation_range=90, width_shift_range=0.2, height_shift_range=0.2, shear_range=0.2,
+                                          fill_mode='constant', cval=0, zoom_range=0.2, horizontal_flip=True, vertical_flip=True)
         self.on_epoch_end()
 
     def on_epoch_end(self):
@@ -36,8 +43,16 @@ class DataGenerator(Sequence):
         y = np.empty((self.batch_size,), dtype=int)
 
         for i, ID in enumerate(list_IDs_temp):
-            X[i] = np.expand_dims(imread(os.path.join(os.path.join('data', self.partition), ID))/255.0, axis=-1)
-            Y[i] = (rgb2lab(imread(os.path.join(os.path.join('data', self.partition + '-target'), ID)))
-                    [:, :, 1:] + 128.0) / (255.0)
-            y[i] = self.labels[ID]
+            if not self.augment:
+                X[i] = np.expand_dims(imread(os.path.join(os.path.join('data', self.partition), ID)) / 255.0, axis=-1)
+                Y[i] = (rgb2lab(imread(os.path.join(os.path.join('data', self.partition + '-target'), ID)))
+                        [:, :, 1:] + 128.0) / (255.0)
+                y[i] = self.labels[ID]
+            else:
+                seed = self.prng.randint(0, 1000000)
+                X[i] = self.datagen.random_transform(np.expand_dims(
+                    imread(os.path.join(os.path.join('data', self.partition), ID)), axis=-1), seed=seed) / 255.0
+                Y[i] = (rgb2lab(self.datagen.random_transform(imread(os.path.join(os.path.join('data', self.partition + '-target'), ID)), seed=seed))
+                        [:, :, 1:] + 128.0) / (255.0)
+                y[i] = self.labels[ID]
         return ([X, X], [Y, to_categorical(y, num_classes=self.n_classes)])

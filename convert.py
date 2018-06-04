@@ -15,7 +15,7 @@ def main(source, dest):
                     partition[root.split(os.sep)[6]] = []
                 partition[root.split(os.sep)[6]].extend([os.path.join(root, x)
                                                          for x in files if x.split('.')[1] == 'jpg'])
-                labels.update({x.split('.')[0] + '.png': '_'.join(root.split(os.sep)[8:])
+                labels.update({x.split('.')[0] + '.png': root.split(os.sep)[8]
                                for x in files if x.split('.')[1] == 'jpg'})
     print('Index created.')
 
@@ -34,20 +34,18 @@ def main(source, dest):
         for i in range(len(partition[x])):
             hash = (60 * i) // len(partition[x])
 
-            source1 = Image.open(partition[x][i])
-            source1.thumbnail((224, 224), Image.LANCZOS)
-            img1 = Image.new('RGB', (224, 224))
-            img1.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
-
-            source2 = Image.open(partition[x][i])
-            source2.thumbnail((224, 224), Image.LANCZOS)
-            img2 = Image.new('RGB', (224, 224))
-            img2.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
-
             if not os.path.exists(os.path.join(os.path.join(dest, x + '-target'), partition[x][i].split(os.sep)[-1].split('.')[0] + '.png')):
+                source2 = Image.open(partition[x][i])
+                source2.resize((224, 224), Image.LANCZOS)
+                img2 = Image.new('RGB', (224, 224))
+                img2.paste(source2, ((224 - source2.size[0]) // 2, (224 - source2.size[1]) // 2))
                 img2.save(os.path.join(os.path.join(dest, x + '-target'),
                                        partition[x][i].split(os.sep)[-1].split('.')[0] + '.png'))
             if not os.path.exists(os.path.join(os.path.join(dest, x), partition[x][i].split(os.sep)[-1].split('.')[0] + '.png')):
+                source1 = Image.open(partition[x][i])
+                source1.resize((224, 224), Image.LANCZOS)
+                img1 = Image.new('RGB', (224, 224))
+                img1.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
                 img1.convert('L').save(os.path.join(os.path.join(dest, x),
                                                     partition[x][i].split(os.sep)[-1].split('.')[0] + '.png'))
             print('{}[{}{}]{}%'.format(x, '#' * hash, ' ' * (60 - hash), (100 * i) // len(partition[x])), end='\r')

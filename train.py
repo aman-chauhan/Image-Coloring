@@ -34,8 +34,8 @@ def main():
     json.dump(l, open('mapping.json', 'w'))
     print('Mappings written.')
 
-    training_generator = DataGenerator(partition['training'], 'training', labels, 24, 1, n_classes, True)
-    validation_generator = DataGenerator(partition['validation'], 'validation', labels, 24, 1, n_classes, True)
+    training_generator = DataGenerator(partition['training'], 'training', labels, 28, 1, n_classes, True, True)
+    validation_generator = DataGenerator(partition['validation'], 'validation', labels, 28, 1, n_classes, True, False)
 
     model = None
     with tf.device('/cpu:0'):

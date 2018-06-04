@@ -29,8 +29,8 @@ def model():
     class_branch = llfn()(class_input)
     class_branch = gfn()(class_branch)
 
-    gfn_units = Dense(units=256, activation='relu', kernel_initializer='random_normal',
-                      bias_initializer='random_normal')(class_branch)
+    gfn_units = Dense(units=256, activation='relu', kernel_initializer='he_normal',
+                      bias_initializer='he_normal')(class_branch)
     # gfn_units = BatchNormalization()(gfn_units)
 
     color_branch = Add()([color_branch, Lambda(tile, arguments={'k': K.shape(color_branch)})(gfn_units)])

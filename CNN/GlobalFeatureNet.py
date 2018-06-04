@@ -12,22 +12,22 @@ def gfn():
 
     # Convolutional Layer with 256 3x3 kernels with double stride and same padding
     gfn_conv1 = Conv2D(filters=256, kernel_size=3, strides=2, padding='same', activation='relu',
-                       kernel_initializer='random_normal', bias_initializer='random_normal')(gfn_input)
+                       kernel_initializer='he_normal', bias_initializer='he_normal')(gfn_input)
     # gfn_conv1 = BatchNormalization()(gfn_conv1)
 
     # Convolutional Layer with 256 3x3 kernels with single stride and same padding
     gfn_conv2 = Conv2D(filters=256, kernel_size=3, strides=1, padding='same', activation='relu',
-                       kernel_initializer='random_normal', bias_initializer='random_normal')(gfn_conv1)
+                       kernel_initializer='he_normal', bias_initializer='he_normal')(gfn_conv1)
     # gfn_conv2 = BatchNormalization()(gfn_conv2)
 
     # Convolutional Layer with 256 3x3 kernels with single stride and same padding
     gfn_conv3 = Conv2D(filters=256, kernel_size=3, strides=2, padding='same', activation='relu',
-                       kernel_initializer='random_normal', bias_initializer='random_normal')(gfn_conv2)
+                       kernel_initializer='he_normal', bias_initializer='he_normal')(gfn_conv2)
     # gfn_conv3 = BatchNormalization()(gfn_conv3)
 
     # Convolutional Layer with 256 3x3 kernels with single stride and same padding
     gfn_conv4 = Conv2D(filters=256, kernel_size=3, strides=1, padding='same', activation='relu',
-                       kernel_initializer='random_normal', bias_initializer='random_normal')(gfn_conv3)
+                       kernel_initializer='he_normal', bias_initializer='he_normal')(gfn_conv3)
     # gfn_conv4 = BatchNormalization()(gfn_conv4)
 
     # Flatten the layer
