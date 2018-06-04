@@ -1,5 +1,5 @@
 from keras.layers.normalization import BatchNormalization
-from keras.layers.merge import Concatenate
+from keras.layers.merge import Add
 from keras.layers.core import Lambda
 from keras.layers.core import Dense
 from keras.layers import Input
@@ -29,10 +29,11 @@ def model():
     class_branch = llfn()(class_input)
     class_branch = gfn()(class_branch)
 
-    gfn_units = Dense(units=256, activation='relu')(class_branch)
+    gfn_units = Dense(units=256, activation='relu', kernel_initializer='random_normal',
+                      bias_initializer='random_normal')(class_branch)
     # gfn_units = BatchNormalization()(gfn_units)
 
-    color_branch = Concatenate()([color_branch, Lambda(tile,arguments={'k':K.shape(color_branch)})(gfn_units)])
+    color_branch = Add()([color_branch, Lambda(tile, arguments={'k': K.shape(color_branch)})(gfn_units)])
     color_branch = color()(color_branch)
 
     class_branch = clf()(class_branch)

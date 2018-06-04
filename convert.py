@@ -40,9 +40,9 @@ def main(source, dest):
             img1.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
 
             source2 = Image.open(partition[x][i])
-            source2.thumbnail((112, 112), Image.LANCZOS)
-            img2 = Image.new('RGB', (112, 112))
-            img2.paste(source1, ((112 - source1.size[0]) // 2, (112 - source1.size[1]) // 2))
+            source2.thumbnail((224, 224), Image.LANCZOS)
+            img2 = Image.new('RGB', (224, 224))
+            img2.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
 
             if not os.path.exists(os.path.join(os.path.join(dest, x + '-target'), partition[x][i].split(os.sep)[-1].split('.')[0] + '.png')):
                 img2.save(os.path.join(os.path.join(dest, x + '-target'),
