@@ -40,7 +40,3 @@ def model():
 
     model = Model(inputs=[color_input, class_input], outputs=[color_branch, class_branch], name='global_model')
     return model
-
-
-if __name__ == '__main__':
-    print(model().summary())
