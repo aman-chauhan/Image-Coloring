@@ -14,13 +14,13 @@ class DataGenerator(Sequence):
         self.n_classes = n_classes
         self.shuffle = shuffle
         self.partition = partition
+        self.prng = np.random.RandomState(42)
         self.on_epoch_end()
 
     def on_epoch_end(self):
         self.indexes = np.arange(len(self.list_IDs))
         if self.shuffle == True:
-            prng = np.random.RandomState(42)
-            prng.shuffle(self.indexes)
+            self.prng.shuffle(self.indexes)
 
     def __len__(self):
         return int(np.floor(len(self.list_IDs) / self.batch_size))

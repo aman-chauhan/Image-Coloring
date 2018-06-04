@@ -1,4 +1,4 @@
-with 128from keras.layers.normalization import BatchNormalization
+from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import Conv2D
 from keras.layers import Input
 from keras.models import Model
