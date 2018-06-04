@@ -10,7 +10,7 @@ def clf():
 
     # Fully Connected Layer with 256 units
     clf_fcon1 = Dense(units=256, activation='relu')(clf_input)
-    clf_fcon1 = BatchNormalization()(clf_fcon1)
+    # clf_fcon1 = BatchNormalization()(clf_fcon1)
 
     # Fully Connected Layer with 'output' units
     clf_fcon2 = Dense(units=871, activation='softmax', name='clf_output')(clf_fcon1)

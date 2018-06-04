@@ -34,17 +34,22 @@ def main(source, dest):
         for i in range(len(partition[x])):
             hash = (60 * i) // len(partition[x])
 
-            source = Image.open(partition[x][i])
-            source.thumbnail((224, 224), Image.LANCZOS)
-            img = Image.new('RGB', (224, 224))
-            img.paste(source, ((224 - source.size[0]) // 2, (224 - source.size[1]) // 2))
+            source1 = Image.open(partition[x][i])
+            source1.thumbnail((224, 224), Image.LANCZOS)
+            img1 = Image.new('RGB', (224, 224))
+            img1.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
+
+            source2 = Image.open(partition[x][i])
+            source2.thumbnail((112, 112), Image.LANCZOS)
+            img2 = Image.new('RGB', (112, 112))
+            img2.paste(source1, ((112 - source1.size[0]) // 2, (112 - source1.size[1]) // 2))
 
             if not os.path.exists(os.path.join(os.path.join(dest, x + '-target'), partition[x][i].split(os.sep)[-1].split('.')[0] + '.png')):
-                img.save(os.path.join(os.path.join(dest, x + '-target'),
-                                      partition[x][i].split(os.sep)[-1].split('.')[0] + '.png'))
+                img2.save(os.path.join(os.path.join(dest, x + '-target'),
+                                       partition[x][i].split(os.sep)[-1].split('.')[0] + '.png'))
             if not os.path.exists(os.path.join(os.path.join(dest, x), partition[x][i].split(os.sep)[-1].split('.')[0] + '.png')):
-                img.convert('L').save(os.path.join(os.path.join(dest, x),
-                                                   partition[x][i].split(os.sep)[-1].split('.')[0] + '.png'))
+                img1.convert('L').save(os.path.join(os.path.join(dest, x),
+                                                    partition[x][i].split(os.sep)[-1].split('.')[0] + '.png'))
             print('{}[{}{}]{}%'.format(x, '#' * hash, ' ' * (60 - hash), (100 * i) // len(partition[x])), end='\r')
         print('\ndone.')
     print('Dataset generated')

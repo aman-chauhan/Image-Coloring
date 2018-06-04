@@ -30,7 +30,7 @@ def model():
     class_branch = gfn()(class_branch)
 
     gfn_units = Dense(units=256, activation='relu')(class_branch)
-    gfn_units = BatchNormalization()(gfn_units)
+    # gfn_units = BatchNormalization()(gfn_units)
 
     color_branch = Concatenate()([color_branch, Lambda(tile,arguments={'k':K.shape(color_branch)})(gfn_units)])
     color_branch = color()(color_branch)
