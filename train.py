@@ -13,7 +13,7 @@ class SaveCallback(Callback):
         self.model_to_save = model
 
     def on_epoch_end(self, epoch, logs=None):
-        self.model_to_save.save('weights.h5')
+        self.model_to_save.save_weights('weights.h5')
         d = {'epoch': epoch}
         json.dump(d, open('epochs.json', 'w'))
 
