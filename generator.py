@@ -7,9 +7,9 @@ import os
 
 
 class DataGenerator(Sequence):
-    def __init__(self, list_IDs, partition, labels, batch_size=16, n_channel=1, n_classes=871, shuffle=True, augment=False):
+    def __init__(self, list_IDs, partition, labels, batch_size=28, n_channel=1, n_classes=719, shuffle=True, augment=False):
         if augment:
-            self.list_IDs = list_IDs * 5
+            self.list_IDs = list_IDs * 3
         else:
             self.list_IDs = list_IDs
         self.labels = labels
@@ -20,7 +20,7 @@ class DataGenerator(Sequence):
         self.augment = augment
         self.partition = partition
         self.prng = np.random.RandomState(42)
-        self.datagen = ImageDataGenerator(rotation_range=90, width_shift_range=0.2, height_shift_range=0.2, shear_range=0.2,
+        self.datagen = ImageDataGenerator(rotation_range=90, width_shift_range=0.3, height_shift_range=0.3, shear_range=0.2,
                                           fill_mode='constant', cval=0, zoom_range=0.2, horizontal_flip=True, vertical_flip=True)
         self.on_epoch_end()
 

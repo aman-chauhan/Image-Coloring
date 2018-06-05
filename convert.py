@@ -35,15 +35,13 @@ def main(source, dest):
             hash = (60 * i) // len(partition[x])
 
             if not os.path.exists(os.path.join(os.path.join(dest, x + '-target'), partition[x][i].split(os.sep)[-1].split('.')[0] + '.png')):
-                source2 = Image.open(partition[x][i])
-                source2.resize((224, 224), Image.LANCZOS)
+                source2 = Image.open(partition[x][i]).resize((224, 224), Image.LANCZOS)
                 img2 = Image.new('RGB', (224, 224))
                 img2.paste(source2, ((224 - source2.size[0]) // 2, (224 - source2.size[1]) // 2))
                 img2.save(os.path.join(os.path.join(dest, x + '-target'),
                                        partition[x][i].split(os.sep)[-1].split('.')[0] + '.png'))
             if not os.path.exists(os.path.join(os.path.join(dest, x), partition[x][i].split(os.sep)[-1].split('.')[0] + '.png')):
-                source1 = Image.open(partition[x][i])
-                source1.resize((224, 224), Image.LANCZOS)
+                source1 = Image.open(partition[x][i]).resize((224, 224), Image.LANCZOS)
                 img1 = Image.new('RGB', (224, 224))
                 img1.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
                 img1.convert('L').save(os.path.join(os.path.join(dest, x),
