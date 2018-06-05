@@ -48,7 +48,7 @@ def main():
 
     initial_epoch = 0
     if os.path.exists('epochs.json'):
-        initial_epoch = json.load(open('epochs.json'))['epoch']
+        initial_epoch = len(json.load(open('epochs.json')).keys())
 
     cbk = SaveCallback(model)
     parallel_model = multi_gpu_model(model, gpus=2)
