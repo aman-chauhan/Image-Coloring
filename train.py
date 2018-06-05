@@ -17,8 +17,8 @@ class SaveCallback(Callback):
         d = {}
         if os.path.exists('epochs.json'):
             d = json.load(open('epochs.json'))
-        d[epoch] = logs
-        json.dump(d, open('epochs.json', 'w'))
+        d[int(epoch)] = logs
+        json.dump(d, open('epochs.json', 'w'), sort_keys=True)
 
 
 def main():
