@@ -11,13 +11,12 @@ import os
 
 
 def main(filename):
-    d = json.load(open('mappings.json'))
+    d = json.load(open('mapping.json'))
     d = {v: k for k, v in d.items()}
     print('Mappings read.')
 
     Image.open(filename).convert('L').save(filename.split('.')[0] + '_input.png')
-    source1 = Image.open(filename).convert('L')
-    source1.thumbnail((224, 224), Image.LANCZOS)
+    source1 = Image.open(filename).convert('L').resize((224, 224), Image.LANCZOS)
     img1 = Image.new('L', (224, 224))
     img1.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
     clf = np.array(img1)
