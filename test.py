@@ -20,8 +20,8 @@ def main(filename):
     img1 = Image.new('L', (224, 224))
     img1.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
     clf = np.array(img1)
-    clf = np.expand_dims(np.expand_dims(clf, -1), 0)
-    img = np.expand_dims(np.expand_dims(rgb2lab(imread(filename))[:, :, 0], -1), 0) / 255.0
+    clf = (np.expand_dims(np.expand_dims(clf, -1), 0) - 127.5) / 127.5
+    img = (np.expand_dims(np.expand_dims(rgb2lab(imread(filename))[:, :, 0], -1), 0) - 127.5) / 127.5
 
     model = FullNetwork.model()
     if os.path.exists('weights.h5'):
@@ -38,8 +38,11 @@ def main(filename):
     else:
         img[:, :, 1:] = ab[0]
     imwrite(filename.split('.')[0] + '_output.png', lab2rgb(img))
-    v = np.nonzero(pred)[1]
-    p = {d[i]: float(pred[0, i]) for i in v}
+    p = {}
+    for i in range(5):
+        k = np.argmax(pred, axis=1)[0]
+        p[d[k]] = "{0:.4f}%".format(float(pred[0, k]) * 100.0)
+        pred[0, k] = 0.0
     json.dump(p, open(filename.split('.')[0] + '_prediction.json', 'w'))
     print('Generation done.')
 
