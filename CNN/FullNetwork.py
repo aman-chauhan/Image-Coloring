@@ -1,10 +1,11 @@
 from keras.layers.normalization import BatchNormalization
-from keras.layers.merge import Add
 from keras.layers.core import Lambda
 from keras.layers.core import Dense
+from keras.layers.merge import Add
 from keras.layers import Input
 from keras.models import Model
 from keras import backend as K
+from keras import regularizers
 
 from .LowLevelFeatureNet import llfn
 from .MidLevelFeatureNet import mlfn
@@ -30,7 +31,7 @@ def model():
     class_branch = gfn()(class_branch)
 
     gfn_units = Dense(units=256, activation='relu', kernel_initializer='he_normal',
-                      bias_initializer='he_normal')(class_branch)
+                      bias_initializer='he_normal', kernel_regularizer=regularizers.l1_l2(0.01))(class_branch)
     # gfn_units = BatchNormalization()(gfn_units)
 
     color_branch = Add()([color_branch, Lambda(tile, arguments={'k': K.shape(color_branch)})(gfn_units)])
