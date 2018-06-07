@@ -11,12 +11,12 @@ def mlfn():
 
     # Convolutional Layer with 256 3x3 kernels with single stride and same padding
     mlfn_conv1 = Conv2D(filters=256, kernel_size=3, strides=1, padding='same', activation='relu',
-                        kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l1_l2(0.001))(mlfn_input)
+                        kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l2(0.001))(mlfn_input)
     # mlfn_conv1 = BatchNormalization()(mlfn_conv1)
 
     # Convolutional Layer with 256 3x3 kernels with single stride and same padding
     mlfn_conv2 = Conv2D(filters=256, kernel_size=3, strides=1, padding='same', activation='relu',
-                        kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l1_l2(0.001))(mlfn_conv1)
+                        kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l2(0.001))(mlfn_conv1)
     # mlfn_conv2 = BatchNormalization()(mlfn_conv2)
 
     # Model definition

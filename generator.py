@@ -20,7 +20,7 @@ class DataGenerator(Sequence):
         self.augment = augment
         self.partition = partition
         self.prng = np.random.RandomState(42)
-        self.datagen = ImageDataGenerator(rotation_range=90, width_shift_range=0.3, height_shift_range=0.3, shear_range=0.2,
+        self.datagen = ImageDataGenerator(rotation_range=60, width_shift_range=0.3, height_shift_range=0.3, shear_range=0.2,
                                           fill_mode='constant', cval=0, zoom_range=0.2, horizontal_flip=True, vertical_flip=True)
         self.on_epoch_end()
 

@@ -1,5 +1,5 @@
-from keras.callbacks import Callback
 from keras.utils import multi_gpu_model
+from keras.callbacks import Callback
 from generator import DataGenerator
 from CNN import FullNetwork
 import tensorflow as tf
@@ -52,7 +52,7 @@ def main():
 
     cbk = SaveCallback(model)
     parallel_model = multi_gpu_model(model, gpus=2)
-    parallel_model.compile(optimizer='adadelta', loss={
+    parallel_model.compile(optimizer='adam', loss={
         'color_model': 'mean_squared_error', 'clf_model': 'categorical_crossentropy'}, metrics={'color_model': 'accuracy', 'clf_model': 'accuracy'})
     parallel_model.fit_generator(generator=training_generator, epochs=1000, verbose=2, callbacks=[
         cbk], validation_data=validation_generator, use_multiprocessing=True, workers=4, initial_epoch=initial_epoch)
