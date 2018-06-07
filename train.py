@@ -38,7 +38,7 @@ def main():
     print('Mappings written.')
 
     training_generator = DataGenerator(partition['training'], 'training', labels, 28, 1, n_classes, True, True)
-    validation_generator = DataGenerator(partition['validation'], 'validation', labels, 28, 1, n_classes, True, False)
+    validation_generator = DataGenerator(partition['validation'], 'validation', labels, 28, 1, n_classes, True, True)
 
     model = None
     with tf.device('/cpu:0'):

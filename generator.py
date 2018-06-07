@@ -9,7 +9,7 @@ import os
 class DataGenerator(Sequence):
     def __init__(self, list_IDs, partition, labels, batch_size=28, n_channel=1, n_classes=719, shuffle=True, augment=False):
         if augment:
-            self.list_IDs = list_IDs * 3
+            self.list_IDs = list_IDs * 2
         else:
             self.list_IDs = list_IDs
         self.labels = labels
