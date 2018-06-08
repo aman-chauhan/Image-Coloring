@@ -12,12 +12,12 @@ def color():
 
     # Convolutional Layer with 128 3x3 kernels with single stride and same padding
     color_conv1 = Conv2D(filters=128, kernel_size=3, strides=1, padding='same', activation='relu',
-                         kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l2(0.001))(color_input)
+                         kernel_initializer='he_uniform', bias_initializer='he_uniform', kernel_regularizer=regularizers.l2(0.0005))(color_input)
     # color_conv1 = BatchNormalization()(color_conv1)
 
     # Convolutional Layer with 64 3x3 kernels with single stride and same padding
     color_conv2 = Conv2D(filters=64, kernel_size=3, strides=1, padding='same', activation='relu',
-                         kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l2(0.001))(color_conv1)
+                         kernel_initializer='he_uniform', bias_initializer='he_uniform', kernel_regularizer=regularizers.l2(0.0005))(color_conv1)
     # color_conv2 = BatchNormalization()(color_conv2)
 
     # Upsampling
@@ -25,12 +25,12 @@ def color():
 
     # Convolutional Layer with 64 3x3 kernels with single stride and same padding
     color_conv3 = Conv2D(filters=64, kernel_size=3, strides=1, padding='same', activation='relu',
-                         kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l2(0.001))(color_upsm1)
+                         kernel_initializer='he_uniform', bias_initializer='he_uniform', kernel_regularizer=regularizers.l2(0.0005))(color_upsm1)
     # color_conv3 = BatchNormalization()(color_conv3)
 
     # Convolutional Layer with 32 3x3 kernels with single stride and same padding
     color_conv4 = Conv2D(filters=32, kernel_size=3, strides=1, padding='same', activation='relu',
-                         kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l2(0.001))(color_conv3)
+                         kernel_initializer='he_uniform', bias_initializer='he_uniform', kernel_regularizer=regularizers.l2(0.0005))(color_conv3)
     # color_conv4 = BatchNormalization()(color_conv4)
 
     # Upsampling
@@ -38,12 +38,12 @@ def color():
 
     # Convolutional Layer with 32 3x3 kernels with single stride and same padding
     color_conv5 = Conv2D(filters=32, kernel_size=3, strides=1, padding='same', activation='relu',
-                         kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l2(0.001))(color_upsm2)
+                         kernel_initializer='he_uniform', bias_initializer='he_uniform', kernel_regularizer=regularizers.l2(0.0005))(color_upsm2)
     # color_conv5 = BatchNormalization()(color_conv5)
 
     # Convolutional Layer with 16 3x3 kernels with single stride and same padding
     color_conv6 = Conv2D(filters=16, kernel_size=3, strides=1, padding='same', activation='relu',
-                         kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l2(0.001))(color_conv5)
+                         kernel_initializer='he_uniform', bias_initializer='he_uniform', kernel_regularizer=regularizers.l2(0.0005))(color_conv5)
     # color_conv6 = BatchNormalization()(color_conv6)
 
     # Upsampling
@@ -51,7 +51,7 @@ def color():
 
     # Convolutional Layer with 2 3x3 kernels with single stride and same padding
     color_conv7 = Conv2D(filters=2, kernel_size=3, strides=1, padding='same',
-                         activation='sigmoid', kernel_initializer='he_normal', bias_initializer='he_normal', kernel_regularizer=regularizers.l2(0.001))(color_upsm3)
+                         activation='sigmoid', kernel_initializer='he_uniform', bias_initializer='he_uniform', kernel_regularizer=regularizers.l2(0.0005))(color_upsm3)
 
     # Model definition
     color_model = Model(inputs=color_input, outputs=color_conv7, name='color_model')
