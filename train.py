@@ -52,9 +52,9 @@ def main():
 
     cbk = SaveCallback(model)
     parallel_model = multi_gpu_model(model, gpus=2)
-    parallel_model.compile(optimizer='adam', loss={
+    parallel_model.compile(optimizer='adadelta', loss={
         'color_model': 'mean_squared_error', 'clf_model': 'categorical_crossentropy'}, metrics={'color_model': 'accuracy', 'clf_model': 'accuracy'})
-    parallel_model.fit_generator(generator=training_generator, epochs=1000, verbose=2, callbacks=[
+    parallel_model.fit_generator(generator=training_generator, epochs=1000, verbose=1, callbacks=[
         cbk], validation_data=validation_generator, use_multiprocessing=True, workers=4, initial_epoch=initial_epoch)
     print('Training done.')
 

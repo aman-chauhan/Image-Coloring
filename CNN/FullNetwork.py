@@ -32,7 +32,7 @@ def model():
 
     gfn_units = Dense(units=256, activation='relu', kernel_initializer='he_uniform',
                       bias_initializer='he_uniform', kernel_regularizer=regularizers.l2(0.0005))(class_branch)
-    # gfn_units = BatchNormalization()(gfn_units)
+    gfn_units = BatchNormalization()(gfn_units)
 
     color_branch = Add()([color_branch, Lambda(tile, arguments={'k': K.shape(color_branch)})(gfn_units)])
     color_branch = color()(color_branch)

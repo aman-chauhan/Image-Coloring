@@ -13,8 +13,8 @@ def clf():
     # Fully Connected Layer with 256 units
     clf_fcon1 = Dense(units=256, activation='relu', kernel_initializer='he_uniform',
                       bias_initializer='he_uniform', kernel_regularizer=regularizers.l2(0.0005))(clf_input)
+    clf_fcon1 = BatchNormalization()(clf_fcon1)
     clf_fcon1 = Dropout(0.20)(clf_fcon1)
-    # clf_fcon1 = BatchNormalization()(clf_fcon1)
 
     # Fully Connected Layer with 'output' units
     clf_fcon2 = Dense(units=719, activation='softmax', kernel_initializer='he_uniform',
