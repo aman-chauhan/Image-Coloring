@@ -20,16 +20,16 @@ def main(filename):
     img1 = Image.new('L', (224, 224))
     img1.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
     clf = np.array(img1)
-    clf = (np.expand_dims(np.expand_dims(clf, -1), 0) - 127.5) / 127.5
-    img = (np.expand_dims(np.expand_dims(rgb2lab(imread(filename))[:, :, 0], -1), 0) - 127.5) / 127.5
+    clf = np.expand_dims(np.expand_dims(clf, -1), 0)
+    img = np.expand_dims(np.expand_dims(rgb2lab(imread(filename))[:, :, 0], -1), 0)
 
     model = FullNetwork.model()
-    if os.path.exists('weights.h5'):
-        model.load_weights('weights.h5')
+    if os.path.exists('micro-weights.h5'):
+        model.load_weights('micro-weights.h5')
         print('Model loaded.')
 
     ab, pred = model.predict([img, clf], 1, 1,)
-    ab = np.clip((ab * 255.0) - 128.0, -128.0, 127.0)
+    ab = np.clip(ab - 128.0, -128.0, 127.0)
     img = rgb2lab(imread(filename))
     if ab[0].shape != img[:, :, 1:].shape:
         row_diff = (ab[0].shape[0] - img[:, :, 1:].shape[0]) // 2

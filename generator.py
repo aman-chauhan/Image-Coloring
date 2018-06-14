@@ -44,16 +44,15 @@ class DataGenerator(Sequence):
 
         for i, ID in enumerate(list_IDs_temp):
             if not self.augment:
-                X[i] = np.expand_dims(
-                    (imread(os.path.join(os.path.join('data', self.partition), ID)) - 127.5) / 127.5, axis=-1)
-                Y[i] = (rgb2lab(imread(os.path.join(os.path.join('data', self.partition + '-target'), ID)))
-                        [:, :, 1:] + 128.0) / (255.0)
+                X[i] = np.expand_dims(imread(os.path.join(os.path.join('data', self.partition), ID)), axis=-1)
+                Y[i] = rgb2lab(imread(os.path.join(os.path.join('data', self.partition + '-target'), ID))
+                               )[:, :, 1:] + 128.0
                 y[i] = self.labels[ID]
             else:
                 seed = self.prng.randint(0, 1000000)
-                X[i] = (self.datagen.random_transform(np.expand_dims(
-                    imread(os.path.join(os.path.join('data', self.partition), ID)), axis=-1), seed=seed) - 127.5) / 127.5
-                Y[i] = (rgb2lab(self.datagen.random_transform(imread(os.path.join(os.path.join('data', self.partition + '-target'), ID)), seed=seed))
-                        [:, :, 1:] + 128.0) / (255.0)
+                X[i] = self.datagen.random_transform(np.expand_dims(
+                    imread(os.path.join(os.path.join('data', self.partition), ID)), axis=-1), seed=seed)
+                Y[i] = rgb2lab(self.datagen.random_transform(imread(os.path.join(os.path.join(
+                    'data', self.partition + '-target'), ID)), seed=seed))[:, :, 1:] + 128.0
                 y[i] = self.labels[ID]
         return ([X, X], [Y, to_categorical(y, num_classes=self.n_classes)])
