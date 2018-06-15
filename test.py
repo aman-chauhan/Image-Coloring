@@ -23,6 +23,11 @@ def main(filename):
     clf = np.expand_dims(np.expand_dims(clf, -1), 0)
     img = np.expand_dims(np.expand_dims(rgb2lab(imread(filename))[:, :, 0], -1), 0)
 
+    if img.shape[1] % 2 != 0:
+        img = img[:, :img.shape[1] - 1, :, :]
+    if img.shape[2] % 2 != 0:
+        img = img[:, :, :img.shape[2] - 1, :]
+
     model = FullNetwork.model()
     if os.path.exists('micro-weights.h5'):
         model.load_weights('micro-weights.h5')
@@ -31,6 +36,12 @@ def main(filename):
     ab, pred = model.predict([img, clf], 1, 1,)
     ab = np.clip(ab - 128.0, -128.0, 127.0)
     img = rgb2lab(imread(filename))
+
+    if img.shape[0] % 2 != 0:
+        img = img[:img.shape[0] - 1, :, :]
+    if img.shape[1] % 2 != 0:
+        img = img[:, :img.shape[1] - 1, :]
+
     if ab[0].shape != img[:, :, 1:].shape:
         row_diff = (ab[0].shape[0] - img[:, :, 1:].shape[0]) // 2
         col_diff = (ab[0].shape[1] - img[:, :, 1:].shape[1]) // 2
