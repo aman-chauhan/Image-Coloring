@@ -11,116 +11,498 @@
     <title>Image-Coloring | Aman Chauhan</title>
 </head>
 
-<body>
-    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Image-Coloring</a>
+<body data-spy="scroll" data-target="#main-nav" data-offset="0">
+    <div class="container">
+        <nav class="navbar sticky-top navbar-expand-md navbar-dark rounded-bottom" style="background-color: #FF9800;" id="main-nav">
+            <div class="container">
+                <a class="navbar-brand" href="#"><strong>Image-Coloring</strong></a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarcontent" aria-controls="navbarcontent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarcontent" aria-controls="navbarcontent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarcontent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Progress <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Design</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Preview</a>
-                    </li>
-                </ul>
+                <div class="collapse navbar-collapse" id="navbarcontent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#progress">Progress</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#design">Design</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#preview">Preview</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <div class="container" style="margin-top:4rem;">
-        <h1>Preview</h1>
-        <div class="row">
-            <div class="jumbotron">
-                <div class="card-columns" id="previewWindow">
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/badlands_input.png" alt="Badlands">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">badlands</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
-                        </div>
+        <div class="card mt-3">
+            <div class="card-header">
+                <h1 class="card-title" id="progress">Progress</h1>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm mt-2 align-self-center">
+                        <h2 class="text-center">Epochs</h2>
+                        <h3 class="text-center" id="epoch-count"></h3>
                     </div>
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/cliff_input.png" alt="Cliff">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">cliff</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
-                        </div>
-                    </div>
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/corridor_input.png" alt="Corridor">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">corridor</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
-                        </div>
-                    </div>
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/diner_input.png" alt="Diner">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">diner</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
-                        </div>
-                    </div>
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/kitchen_input.png" alt="Kitchen">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">kitchen</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
-                        </div>
-                    </div>
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/office_input.png" alt="Office">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">office</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
-                        </div>
-                    </div>
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/skyscraper_input.png" alt="Skyscraper">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">skyscraper</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
-                        </div>
-                    </div>
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/staircase_input.png" alt="Staircase">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">staircase</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
-                        </div>
-                    </div>
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/street_input.png" alt="Street">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">street</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
-                        </div>
-                    </div>
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/tunnel_input.png" alt="Tunnel">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">tunnel</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
-                        </div>
-                    </div>
-                    <div class="card bg-dark text-white text-center">
-                        <img class="card-img" src="docs/utility_room_input.png" alt="UtilityRoom">
-                        <div class="card-img-overlay">
-                            <h3 class="card-title">utility room</h3>
-                            <button type="button" class="btn btn-lg btn-outline-light">Colored</button>
+                    <div class="col-sm-9 mt-2">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <ul class="nav nav-tabs nav-fill card-header-tabs" id="chartTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="training-tab" data-toggle="tab" href="#training" role="tab" aria-controls="training" aria-selected="true">Training</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="validation-tab" data-toggle="tab" href="#validation" role="tab" aria-controls="validation" aria-selected="false">Validation</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="chartContent">
+                                    <div class="tab-pane fade show active" id="training" role="tabpanel" aria-labelledby="training-tab">
+                                        <canvas id="trainingChart" width="4" height="3"></canvas>
+                                    </div>
+                                    <div class="tab-pane fade" id="validation" role="tabpanel" aria-labelledby="validation-tab">
+                                        <canvas id="validationChart" width="4" height="3"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h1 class="card-title" id="design">Design</h1>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-pills nav-fill flex-column flex-sm-row" id="design-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="flex-sm-fill text-sm-center nav-link active" id="design-full-tab" data-toggle="pill" href="#design-full" role="tab" aria-controls="design-full" aria-selected="true">Full</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="flex-sm-fill text-sm-center nav-link" id="design-llfn-tab" data-toggle="pill" href="#design-llfn" role="tab" aria-controls="design-llfn" aria-selected="false">model_*</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="flex-sm-fill text-sm-center nav-link" id="design-mlfn-tab" data-toggle="pill" href="#design-mlfn" role="tab" aria-controls="design-mlfn" aria-selected="false">mlfn_model</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="flex-sm-fill text-sm-center nav-link" id="design-gfn-tab" data-toggle="pill" href="#design-gfn" role="tab" aria-controls="design-gfn" aria-selected="false">gfn_model</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="flex-sm-fill text-sm-center nav-link" id="design-clf-tab" data-toggle="pill" href="#design-clf" role="tab" aria-controls="design-clf" aria-selected="false">clf_model</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="flex-sm-fill text-sm-center nav-link" id="design-color-tab" data-toggle="pill" href="#design-color" role="tab" aria-controls="design-color" aria-selected="false">color_model</a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-2" id="design-tabContent">
+                    <div class="tab-pane fade show active text-center" id="design-full" role="tabpanel" aria-labelledby="design-full-tab">
+                        <img src="docs/full_network.png" class="img-fluid" alt="Full Network">
+                    </div>
+                    <div class="tab-pane fade text-center" id="design-llfn" role="tabpanel" aria-labelledby="design-llfn-tab">
+                        <img src="docs/low_level_features_network.png" class="img-fluid" alt="Low-Level Feature Network">
+                    </div>
+                    <div class="tab-pane fade text-center" id="design-mlfn" role="tabpanel" aria-labelledby="design-mlfn-tab">
+                        <img src="docs/mid_level_features_network.png" class="img-fluid" alt="Mid-Level Feature Network">
+                    </div>
+                    <div class="tab-pane fade text-center" id="design-gfn" role="tabpanel" aria-labelledby="design-gfn-tab">
+                        <img src="docs/global_features_network.png" class="img-fluid" alt="Global Feature Network">
+                    </div>
+                    <div class="tab-pane fade text-center" id="design-clf" role="tabpanel" aria-labelledby="design-clf-tab">
+                        <img src="docs/classifier_network.png" class="img-fluid" alt="Classifier Network">
+                    </div>
+                    <div class="tab-pane fade text-center" id="design-color" role="tabpanel" aria-labelledby="design-color-tab">
+                        <img src="docs/color_network.png" class="img-fluid" alt="Color Network">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h1 class="card-title" id="preview">Preview</h1>
+            </div>
+            <div class="card-body">
+                <div class="card-columns">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">badlands</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="badlandsTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="badlands-input-pill" data-toggle="tab" href="#badlands-input" role="pill" aria-controls="badlands-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="badlands-output-pill" data-toggle="tab" href="#badlands-output" role="pill" aria-controls="badlands-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="badlands-pill" data-toggle="tab" href="#badlands" role="pill" aria-controls="badlands" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="badlands-tabContent">
+                                <div class="tab-pane fade show active text-center" id="badlands-input" role="tabpanel" aria-labelledby="badlands-input-tab">
+                                    <img src="docs/badlands_input.png" class="img-fluid" alt="badlands Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="badlands-output" role="tabpanel" aria-labelledby="badlands-output-tab">
+                                    <img src="docs/badlands_output.png" class="img-fluid" alt="badlands Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="badlands" role="tabpanel" aria-labelledby="badlands-tab">
+                                    <img src="badlands.jpg" class="img-fluid" alt="badlands">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">cliff</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="cliffTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="cliff-input-pill" data-toggle="tab" href="#cliff-input" role="pill" aria-controls="cliff-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="cliff-output-pill" data-toggle="tab" href="#cliff-output" role="pill" aria-controls="cliff-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="cliff-pill" data-toggle="tab" href="#cliff" role="pill" aria-controls="cliff" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="cliff-tabContent">
+                                <div class="tab-pane fade show active text-center" id="cliff-input" role="tabpanel" aria-labelledby="cliff-input-tab">
+                                    <img src="docs/cliff_input.png" class="img-fluid" alt="cliff Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="cliff-output" role="tabpanel" aria-labelledby="cliff-output-tab">
+                                    <img src="docs/cliff_output.png" class="img-fluid" alt="cliff Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="cliff" role="tabpanel" aria-labelledby="cliff-tab">
+                                    <img src="cliff.jpg" class="img-fluid" alt="cliff">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">corridor</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="corridorTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="corridor-input-pill" data-toggle="tab" href="#corridor-input" role="pill" aria-controls="corridor-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="corridor-output-pill" data-toggle="tab" href="#corridor-output" role="pill" aria-controls="corridor-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="corridor-pill" data-toggle="tab" href="#corridor" role="pill" aria-controls="corridor" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="corridor-tabContent">
+                                <div class="tab-pane fade show active text-center" id="corridor-input" role="tabpanel" aria-labelledby="corridor-input-tab">
+                                    <img src="docs/corridor_input.png" class="img-fluid" alt="corridor Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="corridor-output" role="tabpanel" aria-labelledby="corridor-output-tab">
+                                    <img src="docs/corridor_output.png" class="img-fluid" alt="corridor Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="corridor" role="tabpanel" aria-labelledby="corridor-tab">
+                                    <img src="corridor.jpg" class="img-fluid" alt="corridor">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">diner</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="dinerTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="diner-input-pill" data-toggle="tab" href="#diner-input" role="pill" aria-controls="diner-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="diner-output-pill" data-toggle="tab" href="#diner-output" role="pill" aria-controls="diner-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="diner-pill" data-toggle="tab" href="#diner" role="pill" aria-controls="diner" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="diner-tabContent">
+                                <div class="tab-pane fade show active text-center" id="diner-input" role="tabpanel" aria-labelledby="diner-input-tab">
+                                    <img src="docs/diner_input.png" class="img-fluid" alt="diner Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="diner-output" role="tabpanel" aria-labelledby="diner-output-tab">
+                                    <img src="docs/diner_output.png" class="img-fluid" alt="diner Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="diner" role="tabpanel" aria-labelledby="diner-tab">
+                                    <img src="diner.jpg" class="img-fluid" alt="diner">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">kitchen</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="kitchenTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="kitchen-input-pill" data-toggle="tab" href="#kitchen-input" role="pill" aria-controls="kitchen-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="kitchen-output-pill" data-toggle="tab" href="#kitchen-output" role="pill" aria-controls="kitchen-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="kitchen-pill" data-toggle="tab" href="#kitchen" role="pill" aria-controls="kitchen" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="kitchen-tabContent">
+                                <div class="tab-pane fade show active text-center" id="kitchen-input" role="tabpanel" aria-labelledby="kitchen-input-tab">
+                                    <img src="docs/kitchen_input.png" class="img-fluid" alt="kitchen Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="kitchen-output" role="tabpanel" aria-labelledby="kitchen-output-tab">
+                                    <img src="docs/kitchen_output.png" class="img-fluid" alt="kitchen Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="kitchen" role="tabpanel" aria-labelledby="kitchen-tab">
+                                    <img src="kitchen.jpg" class="img-fluid" alt="kitchen">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">office</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="officeTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="office-input-pill" data-toggle="tab" href="#office-input" role="pill" aria-controls="office-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="office-output-pill" data-toggle="tab" href="#office-output" role="pill" aria-controls="office-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="office-pill" data-toggle="tab" href="#office" role="pill" aria-controls="office" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="office-tabContent">
+                                <div class="tab-pane fade show active text-center" id="office-input" role="tabpanel" aria-labelledby="office-input-tab">
+                                    <img src="docs/office_input.png" class="img-fluid" alt="office Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="office-output" role="tabpanel" aria-labelledby="office-output-tab">
+                                    <img src="docs/office_output.png" class="img-fluid" alt="office Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="office" role="tabpanel" aria-labelledby="office-tab">
+                                    <img src="office.jpg" class="img-fluid" alt="office">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">skyscraper</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="skyscraperTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="skyscraper-input-pill" data-toggle="tab" href="#skyscraper-input" role="pill" aria-controls="skyscraper-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="skyscraper-output-pill" data-toggle="tab" href="#skyscraper-output" role="pill" aria-controls="skyscraper-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="skyscraper-pill" data-toggle="tab" href="#skyscraper" role="pill" aria-controls="skyscraper" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="skyscraper-tabContent">
+                                <div class="tab-pane fade show active text-center" id="skyscraper-input" role="tabpanel" aria-labelledby="skyscraper-input-tab">
+                                    <img src="docs/skyscraper_input.png" class="img-fluid" alt="skyscraper Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="skyscraper-output" role="tabpanel" aria-labelledby="skyscraper-output-tab">
+                                    <img src="docs/skyscraper_output.png" class="img-fluid" alt="skyscraper Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="skyscraper" role="tabpanel" aria-labelledby="skyscraper-tab">
+                                    <img src="skyscraper.jpg" class="img-fluid" alt="skyscraper">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">staircase</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="staircaseTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="staircase-input-pill" data-toggle="tab" href="#staircase-input" role="pill" aria-controls="staircase-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="staircase-output-pill" data-toggle="tab" href="#staircase-output" role="pill" aria-controls="staircase-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="staircase-pill" data-toggle="tab" href="#staircase" role="pill" aria-controls="staircase" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="staircase-tabContent">
+                                <div class="tab-pane fade show active text-center" id="staircase-input" role="tabpanel" aria-labelledby="staircase-input-tab">
+                                    <img src="docs/staircase_input.png" class="img-fluid" alt="staircase Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="staircase-output" role="tabpanel" aria-labelledby="staircase-output-tab">
+                                    <img src="docs/staircase_output.png" class="img-fluid" alt="staircase Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="staircase" role="tabpanel" aria-labelledby="staircase-tab">
+                                    <img src="staircase.jpg" class="img-fluid" alt="staircase">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">street</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="streetTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="street-input-pill" data-toggle="tab" href="#street-input" role="pill" aria-controls="street-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="street-output-pill" data-toggle="tab" href="#street-output" role="pill" aria-controls="street-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="street-pill" data-toggle="tab" href="#street" role="pill" aria-controls="street" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="street-tabContent">
+                                <div class="tab-pane fade show active text-center" id="street-input" role="tabpanel" aria-labelledby="street-input-tab">
+                                    <img src="docs/street_input.png" class="img-fluid" alt="street Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="street-output" role="tabpanel" aria-labelledby="street-output-tab">
+                                    <img src="docs/street_output.png" class="img-fluid" alt="street Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="street" role="tabpanel" aria-labelledby="street-tab">
+                                    <img src="street.jpg" class="img-fluid" alt="street">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">tunnel</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="tunnelTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="tunnel-input-pill" data-toggle="tab" href="#tunnel-input" role="pill" aria-controls="tunnel-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tunnel-output-pill" data-toggle="tab" href="#tunnel-output" role="pill" aria-controls="tunnel-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="tunnel-pill" data-toggle="tab" href="#tunnel" role="pill" aria-controls="tunnel" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="tunnel-tabContent">
+                                <div class="tab-pane fade show active text-center" id="tunnel-input" role="tabpanel" aria-labelledby="tunnel-input-tab">
+                                    <img src="docs/tunnel_input.png" class="img-fluid" alt="tunnel Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="tunnel-output" role="tabpanel" aria-labelledby="tunnel-output-tab">
+                                    <img src="docs/tunnel_output.png" class="img-fluid" alt="tunnel Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="tunnel" role="tabpanel" aria-labelledby="tunnel-tab">
+                                    <img src="tunnel.jpg" class="img-fluid" alt="tunnel">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h4 class="card-title">utility room</h4>
+                            <ul class="nav nav-pills nav-fill card-header-tabs mb-1" id="utility_roomTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="utility_room-input-pill" data-toggle="tab" href="#utility_room-input" role="pill" aria-controls="utility_room-input" aria-selected="false">Gray</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="utility_room-output-pill" data-toggle="tab" href="#utility_room-output" role="pill" aria-controls="utility_room-output" aria-selected="false">Color</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="utility_room-pill" data-toggle="tab" href="#utility_room" role="pill" aria-controls="utility_room" aria-selected="true">Truth</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="utility_room-tabContent">
+                                <div class="tab-pane fade show active text-center" id="utility_room-input" role="tabpanel" aria-labelledby="utility_room-input-tab">
+                                    <img src="docs/utility_room_input.png" class="img-fluid" alt="utility_room Input">
+                                </div>
+                                <div class="tab-pane fade text-center" id="utility_room-output" role="tabpanel" aria-labelledby="utility_room-output-tab">
+                                    <img src="docs/utility_room_output.png" class="img-fluid" alt="utility_room Output">
+                                </div>
+                                <div class="tab-pane fade text-center" id="utility_room" role="tabpanel" aria-labelledby="utility_room-tab">
+                                    <img src="utility_room.jpg" class="img-fluid" alt="utility_room">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-light my-3">
+            <div class="card-header">
+                <h1 class="card-title" id="about">About</h1>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md align-self-center m-2">
+                        <img src="docs/me.jpg" alt="Me" class="img-thumbnail rounded-circle">
+                    </div>
+                    <div class="col-md align-self-start m-2">
+                        <h5>Built by</h5>
+                        <h4>Aman Chauhan</h4>
+                        <br>
+                        <h5>You can find me on - </h4>
+                        <a href="https://www.linkedin.com/in/aman-chauhan/" target="_blank"><img src="in-2C-34px-TM.png" alt="LinkedIN"></a>
+                        <a href="https://github.com/aman-chauhan" target="_blank"><img src="GitHub-Mark-32px.png" alt="GitHub"></a>
+                    </div>
+                    <div class="col-md align-self-start m-2">
+                        <h5>Website</h5>
+                        <p class="card-text">Created using - <br>
+                            <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a><br>
+                            <a href="https://jquery.com/" target="_blank">jQuery</a><br>
+                            <a href="https://www.chartjs.org/" target="_blank">Chart.js</a>
+                        </p>
+                    </div>
+                    <div class="col-md align-self-start m-2">
+                        <h5>Network</h5>
+                        <p class="card-text">Built using - <br>
+                            <a href="https://www.tensorflow.org/" target="_blank">Tensorflow</a><br>
+                            <a href="https://keras.io/" target="_blank">Keras.io</a><br>
+                            <a href="https://imageio.github.io/" target="_blank">imageio</a><br>
+                            <a href="https://pillow.readthedocs.io/en/5.1.x/" target="_blank">Pillow</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Optional JavaScript -->
@@ -129,6 +511,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+    <script src="image-coloring.js"></script>
 </body>
 
 </html>
