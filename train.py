@@ -1,5 +1,5 @@
-from keras.callbacks import Callback
 from keras.utils import multi_gpu_model
+from keras.callbacks import Callback
 from generator import DataGenerator
 from CNN import FullNetwork
 import tensorflow as tf
@@ -14,7 +14,10 @@ class SaveCallback(Callback):
 
     def on_epoch_end(self, epoch, logs=None):
         self.model_to_save.save_weights('weights.h5')
-        d = {'epoch': epoch}
+        d = {}
+        if os.path.exists('epochs.json'):
+            d = json.load(open('epochs.json'))
+        d[epoch] = logs
         json.dump(d, open('epochs.json', 'w'))
 
 
@@ -34,8 +37,8 @@ def main():
     json.dump(l, open('mapping.json', 'w'))
     print('Mappings written.')
 
-    training_generator = DataGenerator(partition['training'], 'training', labels, 4, 1, n_classes, True)
-    validation_generator = DataGenerator(partition['validation'], 'validation', labels, 4, 1, n_classes, True)
+    training_generator = DataGenerator(partition['training'], 'training', labels, 28, 1, n_classes, True, True)
+    validation_generator = DataGenerator(partition['validation'], 'validation', labels, 28, 1, n_classes, True, True)
 
     model = None
     with tf.device('/cpu:0'):
@@ -45,13 +48,13 @@ def main():
 
     initial_epoch = 0
     if os.path.exists('epochs.json'):
-        initial_epoch = json.load(open('epochs.json'))['epoch']
+        initial_epoch = len(json.load(open('epochs.json')).keys())
 
     cbk = SaveCallback(model)
     parallel_model = multi_gpu_model(model, gpus=2)
     parallel_model.compile(optimizer='adadelta', loss={
         'color_model': 'mean_squared_error', 'clf_model': 'categorical_crossentropy'}, metrics={'color_model': 'accuracy', 'clf_model': 'accuracy'})
-    parallel_model.fit_generator(generator=training_generator, epochs=1000, callbacks=[
+    parallel_model.fit_generator(generator=training_generator, epochs=1000, verbose=1, callbacks=[
         cbk], validation_data=validation_generator, use_multiprocessing=True, workers=4, initial_epoch=initial_epoch)
     print('Training done.')
 

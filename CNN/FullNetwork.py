@@ -1,10 +1,11 @@
 from keras.layers.normalization import BatchNormalization
-from keras.layers.merge import Concatenate
 from keras.layers.core import Lambda
 from keras.layers.core import Dense
+from keras.layers.merge import Add
 from keras.layers import Input
 from keras.models import Model
 from keras import backend as K
+from keras import regularizers
 
 from .LowLevelFeatureNet import llfn
 from .MidLevelFeatureNet import mlfn
@@ -29,17 +30,14 @@ def model():
     class_branch = llfn()(class_input)
     class_branch = gfn()(class_branch)
 
-    gfn_units = Dense(units=256, activation='relu')(class_branch)
-    # gfn_units = BatchNormalization()(gfn_units)
+    gfn_units = Dense(units=256, activation='relu', kernel_initializer='he_uniform',
+                      bias_initializer='he_uniform', kernel_regularizer=regularizers.l2(0.0005))(class_branch)
+    gfn_units = BatchNormalization()(gfn_units)
 
-    color_branch = Concatenate()([color_branch, Lambda(tile,arguments={'k':K.shape(color_branch)})(gfn_units)])
+    color_branch = Add()([color_branch, Lambda(tile, arguments={'k': K.shape(color_branch)})(gfn_units)])
     color_branch = color()(color_branch)
 
     class_branch = clf()(class_branch)
 
     model = Model(inputs=[color_input, class_input], outputs=[color_branch, class_branch], name='global_model')
     return model
-
-
-if __name__ == '__main__':
-    print(model().summary())
