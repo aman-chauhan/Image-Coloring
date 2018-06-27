@@ -47,7 +47,22 @@ $(document).ready(function() {
                 }
             ]
         }
-        var options = {};
+        var options = {
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Accuracy"
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Epochs"
+                    }
+                }]
+            }
+        }
         var trainChart = new Chart(trainCTX, {
             type: "line",
             data: trainData,
@@ -82,5 +97,17 @@ $(document).ready(function() {
             data: validData,
             options: options
         });
+    });
+
+    $("#main-nav a").on('click', function(event) {
+        if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+            $('html, body').animate({
+                scrollTop: $(hash).offset().top
+            }, 1000, function() {
+                window.location.hash = hash;
+            });
+        }
     });
 });
