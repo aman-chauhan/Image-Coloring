@@ -110,4 +110,99 @@ $(document).ready(function() {
             });
         }
     });
+
+    // imgs = ["badlands", "cliff", "corridor", "diner", "embankment", "kitchen", "office", "skyscraper", "staircase", "street", "tunnel", "utility_room"]
+    preds = {}
+    $.when($.ajax({
+        url: "docs/badlands_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["badlands"] = data;
+        }
+    }), $.ajax({
+        url: "docs/cliff_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["cliff"] = data;
+        }
+    }), $.ajax({
+        url: "docs/corridor_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["corridor"] = data;
+        }
+    }), $.ajax({
+        url: "docs/diner_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["diner"] = data;
+        }
+    }), $.ajax({
+        url: "docs/embankment_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["embankment"] = data;
+        }
+    }), $.ajax({
+        url: "docs/kitchen_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["kitchen"] = data;
+        }
+    }), $.ajax({
+        url: "docs/office_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["office"] = data;
+        }
+    }), $.ajax({
+        url: "docs/skyscraper_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["skyscraper"] = data;
+        }
+    }), $.ajax({
+        url: "docs/staircase_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["staircase"] = data;
+        }
+    }), $.ajax({
+        url: "docs/street_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["street"] = data;
+        }
+    }), $.ajax({
+        url: "docs/tunnel_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["tunnel"] = data;
+        }
+    }), $.ajax({
+        url: "docs/utility_room_prediction.json",
+        async: true,
+        dataType: "json",
+        success: function(data) {
+            preds["utility_room"] = data;
+        }
+    })).then(function() {
+        for (var x in preds) {
+            $("#" + x + "-prediction").append('<li class="list-group-item text-center"><strong>Top 5 Scene Prediction</strong></li>');
+            for (var y in preds[x]) {
+                $("#" + x + "-prediction").append('<li class="list-group-item text-center">' + y + ' <span class="badge badge-primary">' + preds[x][y] + '</span>' + '</li>');
+            }
+        }
+    });
 });
