@@ -27,10 +27,10 @@
                             <a class="nav-link" href="#progress">Progress</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#design">Design</a>
+                            <a class="nav-link" href="#preview">Preview</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#preview">Preview</a>
+                            <a class="nav-link" href="#design">Design</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#about">About</a>
@@ -40,47 +40,57 @@
             </div>
         </nav>
 
-        <div class="card mt-3">
-            <div class="card-header">
-                <h1 class="card-title" id="progress">Progress</h1>
+        <!-- <div class="card mt-3"><div class="card-header"> -->
+        <!-- <h1 class="card-title" id="progress">Progress</h1> -->
+        <h1 class="my-3 text-center" id="progress">Progress</h1>
+        <!-- </div> -->
+        <!-- <div class="card-body"> -->
+        <div class="row">
+            <div class="col-sm mt-2 align-self-center">
+                <h2 class="text-center">Epochs</h2>
+                <h3 class="text-center" id="epoch-count"></h3>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm mt-2 align-self-center">
-                        <h2 class="text-center">Epochs</h2>
-                        <h3 class="text-center" id="epoch-count"></h3>
+            <div class="col-sm-9 mt-2">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs nav-fill card-header-tabs" id="chartTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="training-tab" data-toggle="tab" href="#training" role="tab" aria-controls="training" aria-selected="true">Training</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="validation-tab" data-toggle="tab" href="#validation" role="tab" aria-controls="validation" aria-selected="false">Validation</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-sm-9 mt-2">
-                        <div class="card text-center">
-                            <div class="card-header">
-                                <ul class="nav nav-tabs nav-fill card-header-tabs" id="chartTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="training-tab" data-toggle="tab" href="#training" role="tab" aria-controls="training" aria-selected="true">Training</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="validation-tab" data-toggle="tab" href="#validation" role="tab" aria-controls="validation" aria-selected="false">Validation</a>
-                                    </li>
-                                </ul>
+                    <div class="card-body">
+                        <div class="tab-content" id="chartContent">
+                            <div class="tab-pane fade show active" id="training" role="tabpanel" aria-labelledby="training-tab">
+                                <canvas id="trainingChart" width="4" height="3"></canvas>
                             </div>
-                            <div class="card-body">
-                                <div class="tab-content" id="chartContent">
-                                    <div class="tab-pane fade show active" id="training" role="tabpanel" aria-labelledby="training-tab">
-                                        <canvas id="trainingChart" width="4" height="3"></canvas>
-                                    </div>
-                                    <div class="tab-pane fade" id="validation" role="tabpanel" aria-labelledby="validation-tab">
-                                        <canvas id="validationChart" width="4" height="3"></canvas>
-                                    </div>
-                                </div>
+                            <div class="tab-pane fade" id="validation" role="tabpanel" aria-labelledby="validation-tab">
+                                <canvas id="validationChart" width="4" height="3"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- </div> -->
+        <!-- </div> -->
 
         <div class="card mt-3">
             <div class="card-header">
-                <h1 class="card-title" id="design">Design</h1>
+                <h1 class="card-title text-center" id="preview">Preview</h1>
+            </div>
+            <div class="card-body">
+                <div class="card-columns" id="previewColumns">
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h1 class="card-title text-center" id="design">Design</h1>
             </div>
             <div class="card-body">
                 <ul class="nav nav-pills nav-fill flex-column flex-sm-row" id="design-tab" role="tablist">
@@ -126,19 +136,9 @@
             </div>
         </div>
 
-        <div class="card mt-3">
-            <div class="card-header">
-                <h1 class="card-title" id="preview">Preview</h1>
-            </div>
-            <div class="card-body">
-                <div class="card-columns" id="previewColumns">
-                </div>
-            </div>
-        </div>
-
         <div class="card bg-light my-3">
             <div class="card-header">
-                <h1 class="card-title" id="about">About</h1>
+                <h1 class="card-title text-center" id="about">About</h1>
             </div>
             <div class="card-body">
                 <div class="row">
