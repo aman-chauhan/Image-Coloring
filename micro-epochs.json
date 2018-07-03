@@ -4450,5 +4450,53 @@
         "clf_model_loss": 3.0105690637374307,
         "color_model_acc": 0.6994673091247545,
         "clf_model_acc": 0.35572638146167557
+    },
+    "371": {
+        "val_loss": 120.80673814253373,
+        "val_color_model_loss": 116.95637151544744,
+        "val_clf_model_loss": 3.8503664536909623,
+        "val_color_model_acc": 0.6051356814124368,
+        "val_clf_model_acc": 0.290625,
+        "loss": 63.46581808216006,
+        "color_model_loss": 60.372585895014744,
+        "clf_model_loss": 3.0932322283692115,
+        "color_model_acc": 0.700125018118112,
+        "clf_model_acc": 0.3516042780748663
+    },
+    "372": {
+        "val_loss": 119.37019694935192,
+        "val_color_model_loss": 115.47783383456144,
+        "val_clf_model_loss": 3.8923633748834785,
+        "val_color_model_acc": 0.5808275829661976,
+        "val_clf_model_acc": 0.29375,
+        "loss": 63.17544456386736,
+        "color_model_loss": 60.169023843585066,
+        "clf_model_loss": 3.0064207530064166,
+        "color_model_acc": 0.699862373491447,
+        "clf_model_acc": 0.3559770499108734
+    },
+    "373": {
+        "val_loss": 119.65419949618253,
+        "val_color_model_loss": 115.846003445712,
+        "val_clf_model_loss": 3.8081961631774903,
+        "val_color_model_acc": 0.6065210689197887,
+        "val_clf_model_acc": 0.28494318181818185,
+        "loss": 62.876920968666006,
+        "color_model_loss": 59.883923018892396,
+        "clf_model_loss": 2.992998022446658,
+        "color_model_acc": 0.6996097359640288,
+        "clf_model_acc": 0.35689616755793224
+    },
+    "374": {
+        "val_loss": 119.40353019020775,
+        "val_color_model_loss": 115.57229961048473,
+        "val_clf_model_loss": 3.8312305667183617,
+        "val_color_model_acc": 0.6832422332330184,
+        "val_clf_model_acc": 0.29659090909090907,
+        "loss": 63.29654734402417,
+        "color_model_loss": 60.204768304943826,
+        "clf_model_loss": 3.091779044605194,
+        "color_model_acc": 0.6994160343618954,
+        "clf_model_acc": 0.3509636809269162
     }
 }
