@@ -49,6 +49,11 @@ def main(filename):
     else:
         img[:, :, 1:] = ab[0]
     imwrite('docs' + os.sep + filename.split('.')[0] + '_output.png', lab2rgb(img))
+
+    colormap = np.ones_like(img)*50
+    img[:, :, 0] = colormap[:, :, 0]
+    imwrite('docs' + os.sep + filename.split('.')[0] + '_map.png', lab2rgb(img))
+
     p = {}
     for i in range(5):
         k = np.argmax(pred, axis=1)[0]

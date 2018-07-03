@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    Chart.defaults.global.responsive = true;
+
     function populate(l, data) {
         for (var x in data) {
             for (var y in data[x]) {
@@ -8,6 +10,16 @@ $(document).ready(function() {
             }
         }
         return l;
+    }
+
+    function shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
     }
 
     $.getJSON("micro-epochs.json", function(data) {
@@ -111,7 +123,57 @@ $(document).ready(function() {
         }
     });
 
-    // imgs = ["badlands", "cliff", "corridor", "diner", "embankment", "kitchen", "office", "skyscraper", "staircase", "street", "tunnel", "utility_room"]
+    imgs = ["badlands", "cliff", "corridor", "diner", "embankment", "kitchen", "office", "skyscraper", "staircase", "street", "tunnel", "utility_room"]
+    imgs = shuffleArray(imgs)
+    for (var x in imgs) {
+        var card = $("<div />", {
+            "class": "card text-center"
+        });
+
+
+        var header = $("<div />", {
+            "class": "card-header"
+        });
+        $('<h4 class="card-title">' + imgs[x] + '</h4>').appendTo(header);
+        var headerlist = $("<ul />", {
+            "class": "nav nav-pills nav-fill card-header-tabs mb-1",
+            id: imgs[x] + "Tab",
+            role: "tablist"
+        });
+        $('<li class="nav-item"><a class="nav-link active" id="' + imgs[x] + '-input-pill" data-toggle="tab" href="#' + imgs[x] + '-input" role="pill" aria-controls="' + imgs[x] + '-input" aria-selected="true">Gray</a></li>').appendTo(headerlist);
+        $('<li class="nav-item"><a class="nav-link" id="' + imgs[x] + '-map-pill" data-toggle="tab" href="#' + imgs[x] + '-map" role="pill" aria-controls="' + imgs[x] + '-map" aria-selected="false">Map</a></li>').appendTo(headerlist);
+        $('<li class="nav-item"><a class="nav-link" id="' + imgs[x] + '-output-pill" data-toggle="tab" href="#' + imgs[x] + '-output" role="pill" aria-controls="' + imgs[x] + '-output" aria-selected="false">Color</a></li>').appendTo(headerlist);
+        $('<li class="nav-item"><a class="nav-link" id="' + imgs[x] + '-pill" data-toggle="tab" href="#' + imgs[x] + '" role="pill" aria-controls="' + imgs[x] + '" aria-selected="false">Truth</a></li>').appendTo(headerlist);
+        headerlist.appendTo(header);
+        header.appendTo(card);
+
+
+        var body = $("<div />", {
+            "class": "card-body"
+        });
+        var tabcontent = $("<div />", {
+            "class": "tab-content",
+            id: imgs[x] + "-tabContent"
+        });
+        $('<div class="tab-pane fade show active text-center" id="' + imgs[x] + '-input" role="tabpanel" aria-labelledby="' + imgs[x] + '-input-tab"><img src="docs/' + imgs[x] + '_input.png" class="img-fluid" alt="' + imgs[x] + ' Input"></div>').appendTo(tabcontent);
+        $('<div class="tab-pane fade text-center" id="' + imgs[x] + '-map" role="tabpanel" aria-labelledby="' + imgs[x] + '-map-tab"><img src="docs/' + imgs[x] + '_map.png" class="img-fluid" alt="' + imgs[x] + ' Map"></div>').appendTo(tabcontent);
+        $('<div class="tab-pane fade text-center" id="' + imgs[x] + '-output" role="tabpanel" aria-labelledby="' + imgs[x] + '-output-tab"><img src="docs/' + imgs[x] + '_output.png" class="img-fluid" alt="' + imgs[x] + ' Output"></div>').appendTo(tabcontent);
+        $('<div class="tab-pane fade text-center" id="' + imgs[x] + '" role="tabpanel" aria-labelledby="' + imgs[x] + '-tab"><img src="' + imgs[x] + '.jpg" class="img-fluid" alt="' + imgs[x] + '"></div>').appendTo(tabcontent);
+        tabcontent.appendTo(body);
+        body.appendTo(card);
+
+        $('<ul class="list-group list-group-flush" id="' + imgs[x] + '-prediction"></ul>').appendTo(card);
+
+        card.appendTo("#previewColumns");
+
+        $('#' + imgs[x] + 'Tab a').on('click', function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+
+        $('#' + imgs[x] + 'Tab li:first-child a').tab('show');
+    }
+
     preds = {}
     $.when($.ajax({
         url: "docs/badlands_prediction.json",
