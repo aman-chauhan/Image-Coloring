@@ -4,3 +4,6 @@ data/*
 old/*
 *.json
 *.h5
+*.sh
+*.zip
+server.*
