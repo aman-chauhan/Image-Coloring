@@ -149,7 +149,7 @@ $(document).ready(function() {
 
 
         var body = $("<div />", {
-            "class": "card-body"
+            "class": "card-body p-0"
         });
         var tabcontent = $("<div />", {
             "class": "tab-content",
@@ -158,7 +158,7 @@ $(document).ready(function() {
         $('<div class="tab-pane fade show active text-center" id="' + imgs[x] + '-input" role="tabpanel" aria-labelledby="' + imgs[x] + '-input-tab"><img src="docs/' + imgs[x] + '_input.png" class="img-fluid" alt="' + imgs[x] + ' Input"></div>').appendTo(tabcontent);
         $('<div class="tab-pane fade text-center" id="' + imgs[x] + '-map" role="tabpanel" aria-labelledby="' + imgs[x] + '-map-tab"><img src="docs/' + imgs[x] + '_map.png" class="img-fluid" alt="' + imgs[x] + ' Map"></div>').appendTo(tabcontent);
         $('<div class="tab-pane fade text-center" id="' + imgs[x] + '-output" role="tabpanel" aria-labelledby="' + imgs[x] + '-output-tab"><img src="docs/' + imgs[x] + '_output.png" class="img-fluid" alt="' + imgs[x] + ' Output"></div>').appendTo(tabcontent);
-        $('<div class="tab-pane fade text-center" id="' + imgs[x] + '" role="tabpanel" aria-labelledby="' + imgs[x] + '-tab"><img src="' + imgs[x] + '.jpg" class="img-fluid" alt="' + imgs[x] + '"></div>').appendTo(tabcontent);
+        $('<div class="tab-pane fade text-center" id="' + imgs[x] + '" role="tabpanel" aria-labelledby="' + imgs[x] + '-tab"><img src="docs/' + imgs[x] + '.jpg" class="img-fluid" alt="' + imgs[x] + '"></div>').appendTo(tabcontent);
         tabcontent.appendTo(body);
         body.appendTo(card);
 

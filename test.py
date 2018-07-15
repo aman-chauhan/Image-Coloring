@@ -15,7 +15,7 @@ def main(filename):
     d = {v: k for k, v in d.items()}
     print('Mappings read.')
 
-    Image.open(filename).convert('L').save('docs' + os.sep + filename.split('.')[0] + '_input.png')
+    Image.open(filename).convert('L').save(filename.split('.')[0] + '_input.png')
     source1 = Image.open(filename).convert('L').resize((224, 224), Image.LANCZOS)
     img1 = Image.new('L', (224, 224))
     img1.paste(source1, ((224 - source1.size[0]) // 2, (224 - source1.size[1]) // 2))
@@ -48,20 +48,20 @@ def main(filename):
         img[:, :, 1:] = ab[0, row_diff:ab[0].shape[0] - row_diff, col_diff:ab[0].shape[1] - col_diff, :]
     else:
         img[:, :, 1:] = ab[0]
-    imwrite('docs' + os.sep + filename.split('.')[0] + '_output.png', lab2rgb(img))
+    imwrite(filename.split('.')[0] + '_output.png', lab2rgb(img))
 
     colormap = np.ones_like(img)*50
     img[:, :, 0] = colormap[:, :, 0]
-    imwrite('docs' + os.sep + filename.split('.')[0] + '_map.png', lab2rgb(img))
+    imwrite(filename.split('.')[0] + '_map.png', lab2rgb(img))
 
     p = {}
     for i in range(5):
         k = np.argmax(pred, axis=1)[0]
         p[d[k]] = "{0:.4f}%".format(float(pred[0, k]) * 100.0)
         pred[0, k] = 0.0
-    json.dump(p, open('docs' + os.sep + filename.split('.')[0] + '_prediction.json', 'w'))
+    json.dump(p, open(filename.split('.')[0] + '_prediction.json', 'w'))
     print('Generation done.')
 
 
 if __name__ == '__main__':
-    main(sys.argv[1][2:])
+    main(sys.argv[1])

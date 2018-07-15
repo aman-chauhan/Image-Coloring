@@ -1,0 +1,117 @@
+.text-primary {
+    color: #2196F3 !important;
+}
+
+.border-primary {
+    border-color: #2196F3 !important;
+}
+
+.badge-primary {
+    background-color: #2196F3 !important;
+}
+
+.bg-primary {
+    background-color: #2196F3 !important;
+}
+
+.bg-dark {
+    background-color: #FF9800 !important;
+}
+
+.border-dark {
+    border-color: #FF9800 !important;
+}
+
+.img-thumbnail {
+    border-color: #FF9800 !important;
+    border-width: thick !important;
+}
+
+.nav-pills>li.nav-item>a {
+    color: #2196F3 !important;
+}
+
+.nav-pills>li.nav-item>a.active {
+    background-color: #2196F3 !important;
+    color: #FFFFFF !important;
+}
+
+.nav-pills>li.nav-item>a.active:focus, .nav-pills>li.nav-item>a.active:hover {
+    color: #FFFFFF !important;
+}
+
+.nav-tabs>li.nav-item>a {
+    color: #FFFFFF !important;
+}
+
+.nav-tabs>li.nav-item>a.active {
+    background-color: #FFFFFF !important;
+    color: #2196F3 !important;
+}
+
+.nav-tabs>li.nav-item>a.active:focus, .nav-tabs>li.nav-item>a.active:hover {
+    color: #2196F3 !important;
+}
+
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(-360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(-360deg);
+    }
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
+}
+
+.head-icon {
+    vertical-align: middle !important;
+    -webkit-animation: spin 4s linear infinite;
+    -moz-animation: spin 4s linear infinite;
+    animation: spin 4s linear infinite;
+}
+
+.material-icons {
+    display: inline-flex;
+    vertical-align: bottom;
+}
+
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+.material-icons.md-dark {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.material-icons.md-dark.md-inactive {
+    color: rgba(0, 0, 0, 0.26);
+}
+
+.material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+}
+
+.material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+}
