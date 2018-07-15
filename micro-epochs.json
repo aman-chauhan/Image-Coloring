@@ -6178,5 +6178,65 @@
         "clf_model_loss": 2.843499994532947,
         "color_model_acc": 0.7045393324790792,
         "clf_model_acc": 0.3853052584670232
+    },
+    "515": {
+        "val_loss": 122.91177160089666,
+        "val_color_model_loss": 118.95857960094105,
+        "val_clf_model_loss": 3.9531915361231023,
+        "val_color_model_acc": 0.5829262278296731,
+        "val_clf_model_acc": 0.2852272727272727,
+        "loss": 59.33938758428509,
+        "color_model_loss": 56.39350527323079,
+        "clf_model_loss": 2.945882164008265,
+        "color_model_acc": 0.7062646867757175,
+        "clf_model_acc": 0.36984737076648844
+    },
+    "516": {
+        "val_loss": 121.59479647549716,
+        "val_color_model_loss": 117.74121731844815,
+        "val_clf_model_loss": 3.853579057346691,
+        "val_color_model_acc": 0.5780016541481018,
+        "val_clf_model_acc": 0.29801136363636366,
+        "loss": 58.99293589464484,
+        "color_model_loss": 56.13808164409563,
+        "clf_model_loss": 2.8548543914329136,
+        "color_model_acc": 0.707068668754768,
+        "clf_model_acc": 0.3822415329768271
+    },
+    "517": {
+        "val_loss": 119.59050071022727,
+        "val_color_model_loss": 115.74917782870206,
+        "val_clf_model_loss": 3.8413230245763605,
+        "val_color_model_acc": 0.5842457229440863,
+        "val_clf_model_acc": 0.30170454545454545,
+        "loss": 58.916245574407185,
+        "color_model_loss": 56.072045582925995,
+        "clf_model_loss": 2.8442000305801365,
+        "color_model_acc": 0.7065003987089623,
+        "clf_model_acc": 0.38346702317290554
+    },
+    "518": {
+        "val_loss": 120.86392461603339,
+        "val_color_model_loss": 117.04783810702237,
+        "val_clf_model_loss": 3.8160864916714754,
+        "val_color_model_acc": 0.7205563339320096,
+        "val_clf_model_acc": 0.3053977272727273,
+        "loss": 58.81448267020431,
+        "color_model_loss": 55.963963717700324,
+        "clf_model_loss": 2.8505190107274183,
+        "color_model_acc": 0.7058905724323157,
+        "clf_model_acc": 0.3844418449197861
+    },
+    "519": {
+        "val_loss": 120.77523706609553,
+        "val_color_model_loss": 116.84824357466265,
+        "val_clf_model_loss": 3.9269932660189544,
+        "val_color_model_acc": 0.696078523722562,
+        "val_clf_model_acc": 0.2752840909090909,
+        "loss": 58.58549146601223,
+        "color_model_loss": 55.75294918937479,
+        "clf_model_loss": 2.8325422239388587,
+        "color_model_acc": 0.7054631476308785,
+        "clf_model_acc": 0.38736631016042783
     }
 }
