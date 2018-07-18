@@ -22,12 +22,13 @@ def tile(x, k):
 
 
 def model():
+    shared_llfn = llfn()
     color_input = Input(batch_shape=(None, None, None, 1), name='global_color')
-    color_branch = llfn()(color_input)
+    color_branch = shared_llfn(color_input)
     color_branch = mlfn()(color_branch)
 
     class_input = Input(batch_shape=(None, 224, 224, 1), name='global_class')
-    class_branch = llfn()(class_input)
+    class_branch = shared_llfn(class_input)
     class_branch = gfn()(class_branch)
 
     gfn_units = Dense(units=128, activation='relu', kernel_initializer='he_uniform',

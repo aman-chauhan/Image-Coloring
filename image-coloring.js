@@ -22,7 +22,7 @@ $(document).ready(function() {
         return array;
     }
 
-    $.getJSON("micro-epochs.json", function(data) {
+    $.getJSON("ic-epochs.json", function(data) {
         var cnt = Object.keys(data).length;
         $("#epoch-count").html(cnt.toString() + "<small>/1000</small>");
         var l = {

@@ -29,8 +29,8 @@ def main(filename):
         img = img[:, :, :img.shape[2] - 1, :]
 
     model = FullNetwork.model()
-    if os.path.exists('micro-weights.h5'):
-        model.load_weights('micro-weights.h5')
+    if os.path.exists('ic-weights.h5'):
+        model.load_weights('ic-weights.h5')
         print('Model loaded.')
 
     ab, pred = model.predict([img, clf], 1, 1,)
