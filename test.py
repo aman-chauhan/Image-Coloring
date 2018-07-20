@@ -24,8 +24,8 @@ def main(filename):
     img = np.expand_dims(np.expand_dims(rgb2lab(imread(filename))[:, :, 0], -1), 0)
 
     model = FullNetwork.model()
-    if os.path.exists('micro-weights.h5'):
-        model.load_weights('micro-weights.h5')
+    if os.path.exists('ic-weights.h5'):
+        model.load_weights('ic-weights.h5')
         print('Model loaded.')
 
     ab, pred = model.predict([img, clf], 1, 1,)
