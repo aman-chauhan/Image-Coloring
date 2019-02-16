@@ -1,9 +1,4 @@
 .DS_Store
 *__pycache__*
-data/*
-old/*
-*.json
-*.h5
 *.zip
-*.sh
 server.*
