@@ -12,7 +12,7 @@ def main(filename):
 
     with open('{}.txt'.format(filename), 'w') as fp:
         for i, file in enumerate(files):
-            img = imread(file)
+            img = imread(os.path.join('places365_standard', file))
             if len(img.shape) == 2 or img.shape[2] == 1:
                 print('Skipping file - {}'.format(file))
                 del img

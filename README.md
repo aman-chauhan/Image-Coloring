@@ -11,7 +11,7 @@ Deep Neural Net for coloring grayscale images using local and global image featu
 
 ## Transfer Learning Models
 
--   DenseNet-201
+-   DenseNet-121
 -   Inception-Resnet-V2
 -   Inception-V3
 -   MobileNet-V2
@@ -31,4 +31,6 @@ Deep Neural Net for coloring grayscale images using local and global image featu
 -   `download.sh` - Shell script to download the dataset.
 -   `clean_places365.py` - Python script to remove grayscale images from dataset
     -   `python clean_places365.py train` - to clean train.txt
-    -   `python clean_places365.py test` - to clean test.txt
+    -   `python clean_places365.py val` - to clean val.txt
+-   `train.txt` - Cleaned training files list
+-   `val.txt` - Cleaned validation files list
