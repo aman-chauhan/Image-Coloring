@@ -32,8 +32,8 @@ class IC_Xception:
         input_layer = Input(batch_shape=(None, None, None, prev_filters),
                             name='{}_{}_input'.format(self.dense_name, id))
         for i in range(1, 9):
-            conv = Conv2D(filters=128, kernel_size=1, strides=1,
-                          padding='same', kernel_initializer='he_uniform',
+            conv = Conv2D(filters=128, kernel_size=1, strides=1, padding='same',
+                          kernel_initializer='he_uniform',
                           bias_initializer='he_uniform',
                           name='{}_{}_conv_{}a'.format(self.dense_name,
                                                        id, i))
@@ -44,7 +44,7 @@ class IC_Xception:
             relu1 = Activation(activation='relu',
                                name='{}_{}_relu_{}a'.format(self.dense_name,
                                                             id, i))(norm1)
-            conv2 = Conv2D(filters=32, kernel_size=3, strides=2, padding='same',
+            conv2 = Conv2D(filters=32, kernel_size=3, strides=1, padding='same',
                            kernel_initializer='he_uniform',
                            bias_initializer='he_uniform',
                            name='{}_{}_conv_{}b'.format(self.dense_name,
