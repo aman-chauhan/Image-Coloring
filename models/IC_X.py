@@ -29,10 +29,10 @@ class IC_Xception:
         model.compile('adadelta', 'mse')
         return model
 
-    def get_dense_block(self, prev_filters, id):
+    def get_dense_block(self, prev_filters, id, count):
         input_layer = Input(batch_shape=(None, None, None, prev_filters),
                             name='{}_{}_input'.format(self.dense_name, id))
-        for i in range(1, 9):
+        for i in range(1, count + 1):
             conv = Conv2D(filters=128, kernel_size=1, strides=1, padding='same',
                           kernel_initializer='he_uniform',
                           bias_initializer='he_uniform',
@@ -71,7 +71,7 @@ class IC_Xception:
         preprocess = Lambda(lambda x: preprocess_input(x),
                             name='{}_pre'.format(self.low_name))(duplicate)
         xception = self.get_xception()(preprocess)
-        new_layers = self.get_dense_block(K.int_shape(xception)[-1], 0)(xception)
+        new_layers = self.get_dense_block(K.int_shape(xception)[-1], 0, 8)(xception)
         return Model(inputs=input_layer,
                      outputs=new_layers,
                      name='{}'.format(self.low_name))
@@ -96,7 +96,7 @@ class IC_Xception:
                                       name='{}_reduce_{}norm'.format(name, i))(reduce_b)
             relu = Activation(activation='relu',
                               name='{}_reduce_{}relu'.format(name, i))(norm)
-            dense = self.get_dense_block(K.int_shape(relu)[-1], i)(relu)
+            dense = self.get_dense_block(K.int_shape(relu)[-1], i, 8)(relu)
         if reduce:
             output = GlobalMaxPooling2D(name='{}_pool'.format(name))(dense)
         else:
