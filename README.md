@@ -14,7 +14,6 @@ Deep Neural Net for coloring grayscale images using local and global image featu
 -   DenseNet-121
 -   Inception-Resnet-V2
 -   Inception-V3
--   MobileNet-V2
 -   ResNet50
 -   VGG19
 -   Xception
