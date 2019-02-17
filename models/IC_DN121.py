@@ -1,6 +1,7 @@
 from keras.applications.densenet import DenseNet121
 from keras.applications.densenet import preprocess_input
 
+from keras.layers import GlobalMaxPooling2D
 from keras.layers import BatchNormalization
 from keras.layers import Concatenate
 from keras.layers import Activation
@@ -75,7 +76,35 @@ class IC_DenseNet121:
                      outputs=new_layers,
                      name='{}'.format(self.low_name))
 
+    def get_bottleneck(self, prev_filters, reduce):
+        name = self.global_name if reduce else self.mid_name
+        input_layer = Input(batch_shape=(None, None, None, prev_filters),
+                            name='{}_input'.format(name))
+        for i in range(1, 4):
+            layer = input_layer if i == 1 else dense
+            reduce_a = Conv2D(filters=K.int_shape(layer)[-1] // 2, kernel_size=1,
+                              strides=1, padding='same',
+                              kernel_initializer='he_uniform',
+                              bias_initializer='he_uniform',
+                              name='{}_reduce_{}a'.format(name, i))(layer)
+            reduce_b = Conv2D(filters=K.int_shape(reduce_a)[-1], kernel_size=3,
+                              strides=2 if reduce else 1, padding='same',
+                              kernel_initializer='he_uniform',
+                              bias_initializer='he_uniform',
+                              name='{}_reduce_{}b'.format(name, i))(reduce_a)
+            norm = BatchNormalization(scale=False,
+                                      name='{}_reduce_{}norm'.format(name, i))(reduce_b)
+            relu = Activation(activation='relu',
+                              name='{}_reduce_{}relu'.format(name, i))(norm)
+            dense = self.get_dense_block(K.int_shape(relu)[-1], i)(relu)
+        output = GlobalMaxPooling2D(name='{}_pool'.format(name))(dense)
+        return Model(inputs=input_layer,
+                     outputs=output,
+                     name='{}'.format(name))
+
     def __init__(self, name):
+        self.global_name = '{}_global'.format(name)
+        self.mid_name = '{}_mid'.format(name)
         self.low_name = '{}_low'.format(name)
         self.dense_name = '{}_dense'.format(name)
         self.feed_size = 256
