@@ -80,7 +80,7 @@ class IC_InceptionResNetV2:
         name = self.global_name if reduce else self.mid_name
         input_layer = Input(batch_shape=(None, None, None, prev_filters),
                             name='{}_input'.format(name))
-        for i in range(1, 4):
+        for i in range(1, 3):
             layer = input_layer if i == 1 else dense
             reduce_a = Conv2D(filters=K.int_shape(layer)[-1] // 2, kernel_size=1,
                               strides=1, padding='same',
@@ -97,12 +97,66 @@ class IC_InceptionResNetV2:
             relu = Activation(activation='relu',
                               name='{}_reduce_{}relu'.format(name, i))(norm)
             dense = self.get_dense_block(K.int_shape(relu)[-1], i)(relu)
-        output = GlobalMaxPooling2D(name='{}_pool'.format(name))(dense)
+        if reduce:
+            output = GlobalMaxPooling2D(name='{}_pool'.format(name))(dense)
+        else:
+            output = dense
         return Model(inputs=input_layer,
                      outputs=output,
                      name='{}'.format(name))
 
+    def get_fusion_features(self, prev_mid, prev_global):
+        name = self.fusion_name
+        input_mid = Input(batch_shape=(None, None, None, prev_mid),
+                          name='{}_mid_input'.format(name))
+        input_global = Input(batch_shape=(None, prev_global),
+                             name='{}_global_input'.format(name))
+        tile = Lambda(lambda x, k: K.tile(K.expand_dims(K.expand_dims(x, 1), 1),
+                                          [1, k[1], k[2], 1]),
+                      arguments={'k': K.shape(input_mid)},
+                      name='{}_global_tile'.format(name))(input_global)
+        fusion = Concatenate(name='{}_concat'.format(name))([input_mid, tile])
+        reduce_a = Conv2D(filters=K.int_shape(fusion)[-1] // 2, kernel_size=1,
+                          strides=1, padding='same',
+                          kernel_initializer='he_uniform',
+                          bias_initializer='he_uniform',
+                          name='{}_reduce_a'.format(name))(fusion)
+        reduce_b = Conv2D(filters=K.int_shape(reduce_a)[-1], kernel_size=3,
+                          strides=1, padding='same',
+                          kernel_initializer='he_uniform',
+                          bias_initializer='he_uniform',
+                          name='{}_reduce_b'.format(name))(reduce_a)
+        norm = BatchNormalization(scale=False,
+                                  name='{}_reduce_norm'.format(name))(reduce_b)
+        relu = Activation(activation='relu',
+                          name='{}_reduce_relu'.format(name))(norm)
+        return Model(inputs=[input_mid, input_global],
+                     outputs=relu,
+                     name='{}'.format(name))
+
+    def get_model(self):
+        input_color = Input(batch_shape=(None, None, None, 1),
+                            name='{}_color'.format(self.name))
+        input_class = Input(batch_shape=(None, None, None, 1),
+                            name='{}_class'.format(self.name))
+
+        low_level_features = self.get_low_level_features()
+        color_branch = low_level_features(input_color)
+        class_branch = low_level_features(input_class)
+
+        color_branch = self.get_bottleneck(K.int_shape(color_branch)[-1], False)(color_branch)
+        class_branch = self.get_bottleneck(K.int_shape(class_branch)[-1], True)(class_branch)
+
+        output = self.get_fusion_features(K.int_shape(color_branch)[-1],
+                                          K.int_shape(class_branch)[-1])([color_branch,
+                                                                          class_branch])
+        return Model(inputs=[input_color, input_class],
+                     outputs=output,
+                     name='{}'.format(self.name))
+
     def __init__(self, name):
+        self.name = name
+        self.fusion_name = '{}_fusion'.format(name)
         self.global_name = '{}_global'.format(name)
         self.mid_name = '{}_mid'.format(name)
         self.low_name = '{}_low'.format(name)
