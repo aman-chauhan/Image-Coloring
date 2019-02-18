@@ -33,3 +33,4 @@ Deep Neural Net for coloring grayscale images using local and global image featu
     -   `python clean_places365.py val` - to clean val.txt
 -   `train.txt` - Cleaned training files list
 -   `val.txt` - Cleaned validation files list
+-   `model_shape.py` - Python script to generate model shapes for docs.
