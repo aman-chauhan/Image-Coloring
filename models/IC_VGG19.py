@@ -169,7 +169,7 @@ class IC_VGG19:
                                 name='{}_full2_relu'.format(name))(full2_norm)
         full2_drop = Dropout(rate=dropout,
                              name='{}_full2_drop'.format(name))(full2_relu)
-        output_layer = Dense(units=366, activation='softmax',
+        output_layer = Dense(units=365, activation='softmax',
                              kernel_initializer='he_uniform',
                              bias_initializer='he_uniform',
                              name='{}_softmax'.format(name))(full2_drop)

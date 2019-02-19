@@ -46,7 +46,7 @@ class DataGenerator(Sequence):
             else:
                 seed = self.prng.randint(0, 1000)
                 lab = rgb2lab(self.datagen.random_transform(imread(file), seed=seed))
-            X[i] = np.clip(lab[:, :, 0] * 2.55, 0, 255)
-            Y_color[i] = np.clip((lab[:, :, 1:] + 128.0) / 255.0, 0, 1)
-            Y_class[i] = classes[file.split(os.sep)[1]]
-        return ([X, X], [Y_color, to_categorical(Y_class, num_classes=len(classes))])
+            X[i] = np.clip(lab[:, :, 0:1] * 2.55, 0, 255)
+            Y_color[i] = np.clip((lab[:, :, 1:3] + 128.0) / 255.0, 0, 1)
+            Y_class[i] = self.classes[file.split(os.sep)[2]]
+        return ([X, X], [Y_color, to_categorical(Y_class, num_classes=len(self.classes))])
