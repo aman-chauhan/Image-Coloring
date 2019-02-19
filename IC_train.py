@@ -69,7 +69,7 @@ def main(key, batch_size):
     val = get_filepaths('val.txt')
 
     model, epoch = get_model_and_epochs(key)
-    img_size = 278 if key.startwith('inception') else 256
+    img_size = 278 if key.startswith('inception') else 256
     train_generator = DataGenerator(train, batch_size, img_size, classes, True, True)
     val_generator = DataGenerator(val, batch_size, img_size, classes, True, True)
 
