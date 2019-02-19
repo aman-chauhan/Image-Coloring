@@ -38,24 +38,23 @@ class DataGenerator(Sequence):
 
     def __data_generation(self, files):
         X = np.empty((self.batch_size, self.img_size, self.img_size, 1))
-        Y_color = np.empty((self.batch_size, self.img_size, self.img_size, 2))
+        Y_color = np.empty((self.batch_size, 256, 256, 2))
         Y_class = np.empty((self.batch_size,), dtype=int)
         for i, file in enumerate(files):
             file = os.path.join('places365_standard', file)
-            img = None
+            img = imread(file)
+            if self.augment:
+                seed = self.prng.randint(0, 1000)
+                img = self.datagen.random_transform(img, seed=seed)
             if self.img_size == 256:
-                img = imread(file)
+                lab = rgb2lab(img)
+                X[i] = np.clip(lab[:, :, 0:1] * 2.55, 0, 255)
+                Y_color[i] = np.clip((lab[:, :, 1:3] + 128.0) / 255.0, 0, 1)
             else:
-                img = np.array(Image.fromarray(imread(file)).resize((self.img_size,
+                timg = np.array(Image.fromarray(img).resize((self.img_size,
                                                                      self.img_size),
                                                                     Image.BICUBIC))
-            lab = None
-            if not self.augment:
-                lab = rgb2lab(img)
-            else:
-                seed = self.prng.randint(0, 1000)
-                lab = rgb2lab(self.datagen.random_transform(img, seed=seed))
-            X[i] = np.clip(lab[:, :, 0:1] * 2.55, 0, 255)
-            Y_color[i] = np.clip((lab[:, :, 1:3] + 128.0) / 255.0, 0, 1)
+                X[i] = np.clip(rgb2lab(timg)[:, :, 0:1] * 2.55, 0, 255)
+                Y_color[i] = np.clip((rgb2lab(img)[:, :, 1:3] + 128.0) / 255.0, 0, 1)
             Y_class[i] = self.classes[file.split(os.sep)[2]]
         return ([X, X], [Y_color, to_categorical(Y_class, num_classes=len(self.classes))])
