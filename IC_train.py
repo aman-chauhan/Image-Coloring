@@ -70,8 +70,8 @@ def main(key, batch_size):
 
     model, epoch = get_model_and_epochs(key)
     img_size = 278 if key.startswith('inception') else 256
-    train_generator = DataGenerator(train, batch_size, img_size, classes, True, True)
-    val_generator = DataGenerator(val, batch_size, img_size, classes, True, True)
+    train_generator = DataGenerator(train, batch_size, img_size, classes, True, False)
+    val_generator = DataGenerator(val, batch_size, img_size, classes, True, False)
 
     model_path = os.path.join('weights', '{}.h5'.format(key))
     log_path = os.path.join('logs', '{}.csv'.format(key))
