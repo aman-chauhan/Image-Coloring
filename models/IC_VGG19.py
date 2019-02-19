@@ -36,7 +36,7 @@ class IC_VGG19:
         input_layer = Input(batch_shape=(None, None, None, prev_filters),
                             name='{}_{}_input'.format(self.dense_name, id))
         for i in range(1, count + 1):
-            conv = Conv2D(filters=128, kernel_size=1, strides=1, padding='same',
+            conv = Conv2D(filters=64, kernel_size=1, strides=1, padding='same',
                           kernel_initializer='he_uniform',
                           bias_initializer='he_uniform',
                           name='{}_{}_conv_{}a'.format(self.dense_name,
@@ -48,7 +48,7 @@ class IC_VGG19:
             relu1 = Activation(activation='relu',
                                name='{}_{}_relu_{}a'.format(self.dense_name,
                                                             id, i))(norm1)
-            conv2 = Conv2D(filters=32, kernel_size=3, strides=1, padding='same',
+            conv2 = Conv2D(filters=16, kernel_size=3, strides=1, padding='same',
                            kernel_initializer='he_uniform',
                            bias_initializer='he_uniform',
                            name='{}_{}_conv_{}b'.format(self.dense_name,
@@ -74,7 +74,23 @@ class IC_VGG19:
         preprocess = Lambda(lambda x: preprocess_input(x),
                             name='{}_pre'.format(self.low_name))(duplicate)
         vgg = self.get_vgg()(preprocess)
-        new_layers = self.get_dense_block(K.int_shape(vgg)[-1], 0, 8)(vgg)
+        reduce_a = Conv2D(filters=128, kernel_size=1, strides=1, padding='same',
+                          kernel_initializer='he_uniform',
+                          bias_initializer='he_uniform',
+                          name='{}_reduce_a'.format(self.low_name))(vgg)
+        norm_a = BatchNormalization(scale=False,
+                                    name='{}_reduce_a_norm'.format(self.low_name))(reduce_a)
+        relu_a = Activation(activation='relu',
+                            name='{}_reduce_a_relu'.format(self.low_name))(norm_a)
+        reduce_b = Conv2D(filters=128, kernel_size=3, strides=1, padding='same',
+                          kernel_initializer='he_uniform',
+                          bias_initializer='he_uniform',
+                          name='{}_reduce_b'.format(self.low_name))(relu_a)
+        norm_b = BatchNormalization(scale=False,
+                                    name='{}_reduce_b_norm'.format(self.low_name))(reduce_b)
+        relu_b = Activation(activation='relu',
+                            name='{}_reduce_b_relu'.format(self.low_name))(norm_b)
+        new_layers = self.get_dense_block(K.int_shape(relu_b)[-1], 0, 8)(relu_b)
         return Model(inputs=input_layer,
                      outputs=new_layers,
                      name='{}'.format(self.low_name))
@@ -183,7 +199,7 @@ class IC_VGG19:
                             name='{}_input'.format(name))
         for i in range(1, 4):
             layer = input_layer if i == 1 else upsample
-            reduce_a = Conv2D(filters=K.int_shape(layer)[-1] // 4,
+            reduce_a = Conv2D(filters=K.int_shape(layer)[-1] // 2,
                               kernel_size=3, strides=1, padding='same',
                               kernel_initializer='he_uniform',
                               bias_initializer='he_uniform',
@@ -225,11 +241,33 @@ class IC_VGG19:
         color_branch = self.get_bottleneck(K.int_shape(color_branch)[-1], False)(color_branch)
         class_branch = self.get_bottleneck(K.int_shape(class_branch)[-1], True)(class_branch)
 
-        color_branch = self.get_fusion_features(K.int_shape(color_branch)[-1],
-                                                K.int_shape(class_branch)[-1])([color_branch,
-                                                                                class_branch])
-        class_branch = self.get_classification(K.int_shape(class_branch)[-1])(class_branch)
+        name = self.name
+        tile = Lambda(lambda x, k: K.tile(K.expand_dims(K.expand_dims(x, 1), 1),
+                                          [1, k[1], k[2], 1]),
+                      arguments={'k': K.shape(color_branch)},
+                      name='{}_global_tile'.format(name))(class_branch)
+        fusion = Concatenate(name='{}_concat'.format(name))([color_branch, tile])
+        reduce_a = Conv2D(filters=K.int_shape(fusion)[-1] // 2,
+                          kernel_size=1, strides=1, padding='same',
+                          kernel_initializer='he_uniform',
+                          bias_initializer='he_uniform',
+                          name='{}_reduce_a'.format(name))(fusion)
+        norm_a = BatchNormalization(scale=False,
+                                    name='{}_reduce_norm_a'.format(name))(reduce_a)
+        relu_a = Activation(activation='relu',
+                            name='{}_reduce_relu_a'.format(name))(norm_a)
+        reduce_b = Conv2D(filters=K.int_shape(relu_a)[-1],
+                          kernel_size=3, strides=1, padding='same',
+                          kernel_initializer='he_uniform',
+                          bias_initializer='he_uniform',
+                          name='{}_reduce_b'.format(name))(relu_a)
+        norm_b = BatchNormalization(scale=False,
+                                    name='{}_reduce_norm_b'.format(name))(reduce_b)
+        color_branch = Activation(activation='relu',
+                                  name='{}_reduce_relu_b'.format(name))(norm_b)
+
         color_branch = self.get_color_features(K.int_shape(color_branch)[-1])(color_branch)
+        class_branch = self.get_classification(K.int_shape(class_branch)[-1])(class_branch)
         return Model(inputs=[input_color, input_class],
                      outputs=[color_branch, class_branch],
                      name='{}'.format(self.name))
@@ -243,4 +281,3 @@ class IC_VGG19:
         self.mid_name = '{}_mid'.format(name)
         self.low_name = '{}_low'.format(name)
         self.dense_name = '{}_dense'.format(name)
-        self.feed_size = 256

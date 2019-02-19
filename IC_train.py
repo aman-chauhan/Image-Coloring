@@ -45,7 +45,7 @@ def get_model_and_epochs(key):
             model = models.IC_VGG19(model_d[key]).get_model()
         elif key == 'xception':
             model = models.IC_Xception(model_d[key]).get_model()
-        metric = '{}_class_softmax'.format(model_d[key])
+        metric = '{}_class'.format(model_d[key])
         model.compile(optimizer='adadelta',
                       loss=['mse', 'categorical_crossentropy'],
                       metrics={metric: ['categorical_accuracy',
@@ -69,8 +69,9 @@ def main(key, batch_size):
     val = get_filepaths('val.txt')
 
     model, epoch = get_model_and_epochs(key)
-    train_generator = DataGenerator(train, batch_size, classes, True, True)
-    val_generator = DataGenerator(val, batch_size, classes, True, True)
+    img_size = 278 if key.startwith('inception') else 256
+    train_generator = DataGenerator(train, batch_size, img_size, classes, True, True)
+    val_generator = DataGenerator(val, batch_size, img_size, classes, True, True)
 
     model_path = os.path.join('weights', '{}.h5'.format(key))
     log_path = os.path.join('logs', '{}.csv'.format(key))

@@ -2,6 +2,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import Sequence, to_categorical
 from skimage.color import rgb2lab
 from imageio import imread
+from PIL import Image
 
 import numpy as np
 import os
@@ -9,9 +10,10 @@ import os
 
 # inspired from https://stanford.edu/~shervine/blog/keras-how-to-generate-data-on-the-fly
 class DataGenerator(Sequence):
-    def __init__(self, files, batch_size, classes, shuffle, augment):
+    def __init__(self, files, batch_size, img_size, classes, shuffle, augment):
         self.files = files
         self.batch_size = batch_size
+        self.img_size = img_size
         self.classes = classes
         self.shuffle = shuffle
         self.augment = augment
@@ -35,17 +37,24 @@ class DataGenerator(Sequence):
         return self.__data_generation(list_files_temp)
 
     def __data_generation(self, files):
-        X = np.empty((self.batch_size, 256, 256, 1))
-        Y_color = np.empty((self.batch_size, 256, 256, 2))
+        X = np.empty((self.batch_size, self.img_size, self.img_size, 1))
+        Y_color = np.empty((self.batch_size, self.img_size, self.img_size, 2))
         Y_class = np.empty((self.batch_size,), dtype=int)
         for i, file in enumerate(files):
             file = os.path.join('places365_standard', file)
+            img = None
+            if self.img_size == 256:
+                img = imread(file)
+            else:
+                img = np.array(Image.fromarray(imread(file)).resize((self.img_size,
+                                                                     self.img_size),
+                                                                    Image.BICUBIC))
             lab = None
             if not self.augment:
-                lab = rgb2lab(imread(file))
+                lab = rgb2lab(img)
             else:
                 seed = self.prng.randint(0, 1000)
-                lab = rgb2lab(self.datagen.random_transform(imread(file), seed=seed))
+                lab = rgb2lab(self.datagen.random_transform(img, seed=seed))
             X[i] = np.clip(lab[:, :, 0:1] * 2.55, 0, 255)
             Y_color[i] = np.clip((lab[:, :, 1:3] + 128.0) / 255.0, 0, 1)
             Y_class[i] = self.classes[file.split(os.sep)[2]]
