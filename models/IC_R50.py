@@ -69,7 +69,7 @@ class IC_ResNet50:
     def get_low_level_features(self):
         input_layer = Input(batch_shape=(None, None, None, 1),
                             name='{}_input'.format(self.low_name))
-        duplicate = Lambda(lambda x: K.tile(x, [1, K.shape(x)[1], K.shape(x)[2], 3]),
+        duplicate = Lambda(lambda x: K.tile(x, [1, 1, 1, 3]),
                            name='{}_copy'.format(self.low_name))(input_layer)
         preprocess = Lambda(lambda x: preprocess_input(x),
                             name='{}_pre'.format(self.low_name))(duplicate)
