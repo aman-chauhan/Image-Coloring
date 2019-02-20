@@ -22,7 +22,7 @@ class IC_VGG19:
                     input_shape=(None, None, 3))
         i = 0
         while(True):
-            if vgg.layers[i].name == 'block3_pool':
+            if vgg.layers[i].name == 'block3_conv1':
                 break
             i += 1
         model = Model(inputs=vgg.layers[0].input,
@@ -82,7 +82,7 @@ class IC_VGG19:
                                     name='{}_reduce_a_norm'.format(self.low_name))(reduce_a)
         relu_a = Activation(activation='relu',
                             name='{}_reduce_a_relu'.format(self.low_name))(norm_a)
-        reduce_b = Conv2D(filters=128, kernel_size=3, strides=1, padding='same',
+        reduce_b = Conv2D(filters=128, kernel_size=3, strides=2, padding='same',
                           kernel_initializer='he_uniform',
                           bias_initializer='he_uniform',
                           name='{}_reduce_b'.format(self.low_name))(relu_a)
