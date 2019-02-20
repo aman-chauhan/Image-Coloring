@@ -3,20 +3,23 @@
 Deep Neural Net for coloring grayscale images using local and global image features
 
 ## Packages and Versions
+
 -   `python` - version 3.6
 -   `tensorflow` - version 1.12
 -   `keras` - version 2.2.4
 -   `keras-applications` - version 1.0.7
 -   `imageio`
+-   `Pillow`
+-   `scikit-image`
 
-## Transfer Learning Models
+## Transfer Learning Model Dictionary
 
--   DenseNet-121
--   Inception-Resnet-V2
--   Inception-V3
--   ResNet50
--   VGG19
--   Xception
+-   `densenet` - DenseNet-121
+-   `inceptresnet` - Inception-Resnet-V2
+-   `inception` - Inception-V3
+-   `resnet` - ResNet50
+-   `vgg` - VGG19
+-   `xception` - Xception
 
 ## Folders
 
@@ -36,3 +39,5 @@ Deep Neural Net for coloring grayscale images using local and global image featu
 -   `val.txt` - Cleaned validation files list
 -   `model_shape.py` - Python script to generate model shapes for docs.
 -   `IC_train.py` - Python script to train the network.
+    -   `python IC_train.py <model_type> <batch_size>` - to train a specific type of model with the given batch size.
+    -   Example - `python IC_train.py inception 32` - to train the Image-Coloring model using transfer learning layers from InceptionV3. See ***Transfer Learning Model Dictionary*** section to see the valid and available transfer learning models.
