@@ -1,5 +1,5 @@
-from keras.callbacks import ModelCheckpoint
 from keras.callbacks import EarlyStopping
+from checkpoint import ModelCheckpoint
 from keras.callbacks import CSVLogger
 from generator import DataGenerator
 from keras.models import load_model
@@ -34,17 +34,23 @@ def get_model_and_epochs(key):
                    'inception': 'iv3', 'resnet': 'r50',
                    'vgg': 'vgg', 'xception': 'x'}
         if key == 'densenet':
-            model = models.IC_DenseNet121(model_d[key]).get_model()
+            from models.IC_DN121 import get_model
+            model = get_model(model_d[key])
         elif key == 'inceptionresnet':
-            model = models.IC_InceptionResNetV2(model_d[key]).get_model()
+            from models.IC_IRV2 import get_model
+            model = get_model(model_d[key])
         elif key == 'inception':
-            model = models.IC_InceptionV3(model_d[key]).get_model()
+            from models.IC_IV3 import get_model
+            model = get_model(model_d[key])
         elif key == 'resnet':
-            model = models.IC_ResNet50(model_d[key]).get_model()
+            from models.IC_R50 import get_model
+            model = get_model(model_d[key])
         elif key == 'vgg':
-            model = models.IC_VGG19(model_d[key]).get_model()
+            from models.IC_VGG19 import get_model
+            model = get_model(model_d[key])
         elif key == 'xception':
-            model = models.IC_Xception(model_d[key]).get_model()
+            from models.IC_X import get_model
+            model = get_model(model_d[key])
         metric = '{}_class'.format(model_d[key])
         model.compile(optimizer='adadelta',
                       loss=['mse', 'categorical_crossentropy'],
@@ -75,8 +81,7 @@ def main(key, batch_size):
 
     model_path = os.path.join('weights', '{}.h5'.format(key))
     log_path = os.path.join('logs', '{}.csv'.format(key))
-    checkpoint = ModelCheckpoint(filepath=model_path, monitor='val_loss',
-                                 verbose=1, save_best_only=True, mode='min')
+    checkpoint = ModelCheckpoint(filepath=model_path)
     earlystop = EarlyStopping(monitor='val_loss', patience=10, mode='min')
     csvlogger = CSVLogger(filename=log_path, append=True)
     model.fit_generator(generator=train_generator, epochs=100, verbose=1,
@@ -84,7 +89,6 @@ def main(key, batch_size):
                         validation_data=val_generator,
                         use_multiprocessing=True, workers=4,
                         initial_epoch=epoch)
-
 
 
 if __name__ == '__main__':
