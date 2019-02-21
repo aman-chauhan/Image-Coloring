@@ -24,12 +24,14 @@ class DataGenerator(Sequence):
         self.on_epoch_end()
 
     def on_epoch_end(self):
-        self.indexes = np.arange(len(self.files))
+        self.indexes = np.random.choice(len(self.files), 1000)
+        # self.indexes = np.arange(len(self.files))
         if self.shuffle == True:
             self.prng.shuffle(self.indexes)
 
     def __len__(self):
-        return int(np.floor(len(self.files) / self.batch_size))
+        return int(np.floor(len(self.indexes) / self.batch_size))
+        # return int(np.floor(len(self.files) / self.batch_size))
 
     def __getitem__(self, index):
         indexes = self.indexes[index * self.batch_size:(index + 1) * self.batch_size]
@@ -52,8 +54,8 @@ class DataGenerator(Sequence):
                 Y_color[i] = np.clip((lab[:, :, 1:3] + 128.0) / 255.0, 0, 1)
             else:
                 timg = np.array(Image.fromarray(img).resize((self.img_size,
-                                                                     self.img_size),
-                                                                    Image.BICUBIC))
+                                                             self.img_size),
+                                                            Image.BICUBIC))
                 X[i] = np.clip(rgb2lab(timg)[:, :, 0:1] * 2.55, 0, 255)
                 Y_color[i] = np.clip((rgb2lab(img)[:, :, 1:3] + 128.0) / 255.0, 0, 1)
             Y_class[i] = self.classes[file.split(os.sep)[2]]
