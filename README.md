@@ -35,9 +35,10 @@ Deep Neural Net for coloring grayscale images using local and global image featu
 -   `clean_places365.py` - Python script to remove grayscale images from dataset
     -   `python clean_places365.py train` - to clean train.txt
     -   `python clean_places365.py val` - to clean val.txt
--   `train.txt` - Cleaned training files list
--   `val.txt` - Cleaned validation files list
+-   `train.txt` and `val.txt` - Cleaned training and validation files list.
 -   `model_shape.py` - Python script to generate model shapes for docs.
+-   `generator.py` - DataGenerator class for feeding the images to the model for training and evaluation.
+-   `checkpoint.py` - ModelCheckpoint class for saving model weights whenever validation loss decreases after an epoch.
 -   `IC_train.py` - Python script to train the network.
     -   `python IC_train.py <model_type> <batch_size>` - to train a specific type of model with the given batch size.
     -   Example - `python IC_train.py inception 32` - to train the Image-Coloring model using transfer learning layers from InceptionV3. See **_Transfer Learning Model Dictionary_** section to see the valid and available transfer learning models.
