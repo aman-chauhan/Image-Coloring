@@ -2,7 +2,6 @@ from keras.callbacks import EarlyStopping
 from checkpoint import ModelCheckpoint
 from keras.callbacks import CSVLogger
 from generator import DataGenerator
-from keras.models import load_model
 from keras import backend as K
 
 import pandas as pd
@@ -28,42 +27,42 @@ def get_filepaths(filename):
 def get_model_and_epochs(key):
     model = None
     epoch = 0
+    model_d = {'densenet': 'dn121', 'inceptionresnet': 'irv2',
+               'inception': 'iv3', 'resnet': 'r50',
+               'vgg': 'vgg', 'xception': 'x'}
+    if key == 'densenet':
+        from models.IC_DN121 import get_model
+        model = get_model(model_d[key])
+    elif key == 'inceptionresnet':
+        from models.IC_IRV2 import get_model
+        model = get_model(model_d[key])
+    elif key == 'inception':
+        from models.IC_IV3 import get_model
+        model = get_model(model_d[key])
+    elif key == 'resnet':
+        from models.IC_R50 import get_model
+        model = get_model(model_d[key])
+    elif key == 'vgg':
+        from models.IC_VGG19 import get_model
+        model = get_model(model_d[key])
+    elif key == 'xception':
+        from models.IC_X import get_model
+        model = get_model(model_d[key])
     if not os.path.exists(os.path.join('weights', '{}.h5'.format(key))):
         print('Generating new {} model.'.format(key))
-        model_d = {'densenet': 'dn121', 'inceptionresnet': 'irv2',
-                   'inception': 'iv3', 'resnet': 'r50',
-                   'vgg': 'vgg', 'xception': 'x'}
-        if key == 'densenet':
-            from models.IC_DN121 import get_model
-            model = get_model(model_d[key])
-        elif key == 'inceptionresnet':
-            from models.IC_IRV2 import get_model
-            model = get_model(model_d[key])
-        elif key == 'inception':
-            from models.IC_IV3 import get_model
-            model = get_model(model_d[key])
-        elif key == 'resnet':
-            from models.IC_R50 import get_model
-            model = get_model(model_d[key])
-        elif key == 'vgg':
-            from models.IC_VGG19 import get_model
-            model = get_model(model_d[key])
-        elif key == 'xception':
-            from models.IC_X import get_model
-            model = get_model(model_d[key])
-        metric = '{}_class'.format(model_d[key])
-        model.compile(optimizer='adadelta',
-                      loss=['mse', 'categorical_crossentropy'],
-                      metrics={metric: ['categorical_accuracy',
-                                        'top_k_categorical_accuracy']})
     else:
         print('Fetching {} model from logs.'.format(key))
         model_path = os.path.join('weights', '{}.h5'.format(key))
         log_path = os.path.join('logs', '{}.csv'.format(key))
-        model = load_model(model_path)
+        model.load_weights(model_path)
         logs = pd.read_csv(log_path)
         epoch = len(logs)
         del logs
+    metric = '{}_class'.format(model_d[key])
+    model.compile(optimizer='adadelta',
+                  loss=['mse', 'categorical_crossentropy'],
+                  metrics={metric: ['categorical_accuracy',
+                                    'top_k_categorical_accuracy']})
     return (model, epoch)
 
 
