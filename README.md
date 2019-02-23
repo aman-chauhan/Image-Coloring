@@ -37,11 +37,12 @@ Deep Neural Net for coloring grayscale images using local and global image featu
     -   `python clean_places365.py val` - to clean val.txt
 -   `train.txt` and `val.txt` - Cleaned training and validation files list.
 -   `model_shape.py` - Python script to generate model shapes for docs.
--   `generator.py` - DataGenerator class for feeding the images to the model for training and evaluation.
--   `checkpoint.py` - ModelCheckpoint class for saving model weights whenever validation loss decreases after an epoch.
 -   `IC_train.py` - Python script to train the network.
     -   `python IC_train.py <model_type> <batch_size>` - to train a specific type of model with the given batch size.
     -   Example - `python IC_train.py inception 32` - to train the Image-Coloring model using transfer learning layers from InceptionV3. See **_Transfer Learning Model Dictionary_** section to see the valid and available transfer learning models.
+-   `IC_test.py` - Python script to test a model with validation images.
+    -   `python IC_test.py <root_folder> <model_type>` - to test images stored in `truth` directory of `<root_folder>`, it will generate colored images and class predictions for them using the `<model_type>` model.
+    -   Example - `python IC_test.py docs resnet` was one of the commands used to generate data for the static website.
 
 ## [NOTE] Keras Version issues
 
