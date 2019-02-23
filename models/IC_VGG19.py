@@ -94,7 +94,7 @@ def get_low_level_features(name):
                  name='{}'.format(name))
 
 
-def get_bottleneck(self, prev_filters, reduce):
+def get_bottleneck(name, prev_filters, reduce):
     name = '{}_global'.format(name) if reduce else '{}_mid'.format(name)
     input_layer = Input(batch_shape=(None, None, None, prev_filters),
                         name='{}_input'.format(name))
