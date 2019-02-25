@@ -1,5 +1,6 @@
 from skimage.color import rgb2lab, lab2rgb
 from imageio import imread, imwrite
+from keras import backend as K
 from PIL import Image
 
 import pandas as pd
@@ -85,12 +86,12 @@ def get_model_and_size(key):
     return (model, img_size)
 
 
-def main(root, key):
+def single(root, key):
     gray_path, color_path, class_path = init(root, key)
     true_path = os.path.join(root, 'truth')
     classes = get_classes('classes.txt')
     model, img_size = get_model_and_size(key)
-    batch, filenames = get_truth_images(root, 256)
+    batch, filenames = get_truth_images(root, img_size)
 
     imgs, class_pred = model.predict([batch, batch])
     class_args = np.argsort(class_pred, axis=1)[:, -5:][:, ::-1]
@@ -116,5 +117,60 @@ def main(root, key):
                     (gray_img[:, :, 0] * 2.55).astype('uint8'))
 
 
+def all(root, key):
+    gray_path, color_path, class_path = init(root, key)
+    true_path = os.path.join(root, 'truth')
+    classes = get_classes('classes.txt')
+
+    model_names = None
+    for _, _, files in os.walk('weights'):
+        model_names = [x.strip().split('.')[0] for x in files if not x.startswith('.')]
+
+    imgs = None
+    class_pred = None
+    for model_name in model_names:
+        K.clear_session()
+        print("Loading model {} and generating predictions.".format(model_name))
+        model, img_size = get_model_and_size(model_name)
+        batch, filenames = get_truth_images(root, img_size)
+
+        if imgs is None:
+            imgs, class_pred = model.predict([batch, batch])
+        else:
+            m_imgs, m_class_pred = model.predict([batch, batch])
+            imgs += m_imgs
+            class_pred += m_class_pred
+        del model
+        del img_size
+        del batch
+    imgs /= len(model_names)
+    class_pred /= len(model_names)
+    class_args = np.argsort(class_pred, axis=1)[:, -5:][:, ::-1]
+
+    for i, file in enumerate(filenames):
+        gray_img = rgb2lab(imread(os.path.join(true_path, file)))[:, :, 0:1]
+        # color image
+        img = np.concatenate((gray_img,
+                              np.clip(imgs[i] * 255.0 - 128.0, -128.0, 127.0)),
+                             axis=-1)
+        img = lab2rgb(img) * 255.0
+        imwrite(os.path.join(color_path, file),
+                np.clip(img.astype('uint8'), 0, 255))
+        # class prediction
+        d = {classes[x]: float(class_pred[i, x]) * 100.0 for x in class_args[i]}
+        json.dump(d, open(os.path.join(class_path,
+                                       '{}.json'.format(file.split('.')[0])),
+                          'w'),
+                  indent=4, sort_keys=True)
+        # grayscale image
+        if not os.path.exists(os.path.join(gray_path, file)):
+            imwrite(os.path.join(gray_path, file),
+                    (gray_img[:, :, 0] * 2.55).astype('uint8'))
+
+
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    key = sys.argv[2]
+    if key == 'all':
+        all(sys.argv[1], key)
+    else:
+        single(sys.argv[1], key)
