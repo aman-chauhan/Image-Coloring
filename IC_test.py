@@ -1,4 +1,5 @@
 from skimage.color import rgb2lab, lab2rgb
+from skimage.filters import gaussian
 from imageio import imread, imwrite
 from keras import backend as K
 from PIL import Image
@@ -16,6 +17,13 @@ def init(root, key):
     if not os.path.exists(gray_path):
         os.mkdir(gray_path)
 
+    map_path = os.path.join(root, 'map')
+    if not os.path.exists(map_path):
+        os.mkdir(map_path)
+    map_path = os.path.join(map_path, key)
+    if not os.path.exists(map_path):
+        os.mkdir(map_path)
+
     color_path = os.path.join(root, 'color')
     if not os.path.exists(color_path):
         os.mkdir(color_path)
@@ -30,7 +38,7 @@ def init(root, key):
     if not os.path.exists(class_path):
         os.mkdir(class_path)
 
-    return (gray_path, color_path, class_path)
+    return (gray_path, map_path, color_path, class_path)
 
 
 def get_classes(filename):
@@ -87,7 +95,7 @@ def get_model_and_size(key):
 
 
 def single(root, key):
-    gray_path, color_path, class_path = init(root, key)
+    gray_path, map_path, color_path, class_path = init(root, key)
     true_path = os.path.join(root, 'truth')
     classes = get_classes('classes.txt')
     model, img_size = get_model_and_size(key)
@@ -98,12 +106,20 @@ def single(root, key):
 
     for i, file in enumerate(filenames):
         gray_img = rgb2lab(imread(os.path.join(true_path, file)))[:, :, 0:1]
+        const_img = gaussian(np.random.rand(*gray_img.shape) * 50.0 + 25.0)
         # color image
         img = np.concatenate((gray_img,
                               np.clip(imgs[i] * 255.0 - 128.0, -128.0, 127.0)),
                              axis=-1)
         img = lab2rgb(img) * 255.0
         imwrite(os.path.join(color_path, file),
+                np.clip(img.astype('uint8'), 0, 255))
+        # map image
+        img = np.concatenate((const_img,
+                              np.clip(imgs[i] * 255.0 - 128.0, -128.0, 127.0)),
+                             axis=-1)
+        img = lab2rgb(img) * 255.0
+        imwrite(os.path.join(map_path, file),
                 np.clip(img.astype('uint8'), 0, 255))
         # class prediction
         d = {classes[x]: float(class_pred[i, x]) * 100.0 for x in class_args[i]}
@@ -118,7 +134,7 @@ def single(root, key):
 
 
 def all(root, key):
-    gray_path, color_path, class_path = init(root, key)
+    gray_path, map_path, color_path, class_path = init(root, key)
     true_path = os.path.join(root, 'truth')
     classes = get_classes('classes.txt')
 
@@ -149,12 +165,20 @@ def all(root, key):
 
     for i, file in enumerate(filenames):
         gray_img = rgb2lab(imread(os.path.join(true_path, file)))[:, :, 0:1]
+        const_img = gaussian(np.random.rand(*gray_img.shape) * 50.0 + 25.0)
         # color image
         img = np.concatenate((gray_img,
                               np.clip(imgs[i] * 255.0 - 128.0, -128.0, 127.0)),
                              axis=-1)
         img = lab2rgb(img) * 255.0
         imwrite(os.path.join(color_path, file),
+                np.clip(img.astype('uint8'), 0, 255))
+        # map image
+        img = np.concatenate((const_img,
+                              np.clip(imgs[i] * 255.0 - 128.0, -128.0, 127.0)),
+                             axis=-1)
+        img = lab2rgb(img) * 255.0
+        imwrite(os.path.join(map_path, file),
                 np.clip(img.astype('uint8'), 0, 255))
         # class prediction
         d = {classes[x]: float(class_pred[i, x]) * 100.0 for x in class_args[i]}

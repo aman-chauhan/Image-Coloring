@@ -5,3 +5,4 @@
 places365_standard/*
 server.*
 bashutils*
+.ipynb_checkpoints*
