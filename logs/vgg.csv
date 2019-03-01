@@ -1,0 +1,2 @@
+epoch,loss,val_loss,val_vgg_class_categorical_accuracy,val_vgg_class_loss,val_vgg_class_top_k_categorical_accuracy,val_vgg_color_loss,vgg_class_categorical_accuracy,vgg_class_loss,vgg_class_top_k_categorical_accuracy,vgg_color_loss
+0,3.5416943644399805,2.954776009985059,0.2936036955384661,2.95226186814577,0.6012748659954109,0.002514138236171156,0.2056418375637268,3.539120985311047,0.4738973405089688,0.002573378945382216
