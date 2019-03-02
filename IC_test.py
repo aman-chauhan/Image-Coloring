@@ -6,6 +6,7 @@ from PIL import Image
 
 import pandas as pd
 import numpy as np
+import shutil
 import models
 import json
 import sys
@@ -13,6 +14,10 @@ import os
 
 
 def init(root, key):
+    temp_path = os.path.join(root, 'temp')
+    if not os.path.exists(temp_path):
+        os.mkdir(temp_path)
+
     gray_path = os.path.join(root, 'grayscale')
     if not os.path.exists(gray_path):
         os.mkdir(gray_path)
@@ -38,7 +43,7 @@ def init(root, key):
     if not os.path.exists(class_path):
         os.mkdir(class_path)
 
-    return (gray_path, map_path, color_path, class_path)
+    return (temp_path, gray_path, map_path, color_path, class_path)
 
 
 def get_classes(filename):
@@ -95,13 +100,15 @@ def get_model_and_size(key):
 
 
 def single(root, key):
-    gray_path, map_path, color_path, class_path = init(root, key)
+    temp_path, gray_path, map_path, color_path, class_path = init(root, key)
     true_path = os.path.join(root, 'truth')
     classes = get_classes('classes.txt')
     model, img_size = get_model_and_size(key)
     batch, filenames = get_truth_images(root, img_size)
 
     imgs, class_pred = model.predict([batch, batch])
+    np.save(os.path.join(temp_path, '{}_imgs'.format(key)), imgs)
+    np.save(os.path.join(temp_path, '{}_pred'.format(key)), class_pred)
     class_args = np.argsort(class_pred, axis=1)[:, -5:][:, ::-1]
 
     for i, file in enumerate(filenames):
@@ -134,7 +141,7 @@ def single(root, key):
 
 
 def all(root, key):
-    gray_path, map_path, color_path, class_path = init(root, key)
+    temp_path, gray_path, map_path, color_path, class_path = init(root, key)
     true_path = os.path.join(root, 'truth')
     classes = get_classes('classes.txt')
 
@@ -142,26 +149,22 @@ def all(root, key):
     for _, _, files in os.walk('weights'):
         model_names = [x.strip().split('.')[0] for x in files if not x.startswith('.')]
 
+    _, filenames = get_truth_images(root, 256)
+
     imgs = None
     class_pred = None
     for model_name in model_names:
-        K.clear_session()
-        print("Loading model {} and generating predictions.".format(model_name))
-        model, img_size = get_model_and_size(model_name)
-        batch, filenames = get_truth_images(root, img_size)
-
         if imgs is None:
-            imgs, class_pred = model.predict([batch, batch])
+            imgs = np.load(os.path.join(temp_path, '{}_imgs.npy'.format(model_name)))
+            class_pred = np.load(os.path.join(temp_path, '{}_pred.npy'.format(model_name)))
         else:
-            m_imgs, m_class_pred = model.predict([batch, batch])
-            imgs += m_imgs
-            class_pred += m_class_pred
-        del model
-        del img_size
-        del batch
+            imgs += np.load(os.path.join(temp_path, '{}_imgs.npy'.format(model_name)))
+            class_pred += np.load(os.path.join(temp_path, '{}_pred.npy'.format(model_name)))
     imgs /= len(model_names)
     class_pred /= len(model_names)
     class_args = np.argsort(class_pred, axis=1)[:, -5:][:, ::-1]
+
+    shutil.rmtree(temp_path)
 
     for i, file in enumerate(filenames):
         gray_img = rgb2lab(imread(os.path.join(true_path, file)))[:, :, 0:1]
