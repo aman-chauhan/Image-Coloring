@@ -1,0 +1,2 @@
+epoch,irv2_class_categorical_accuracy,irv2_class_loss,irv2_class_top_k_categorical_accuracy,irv2_color_loss,loss,val_irv2_class_categorical_accuracy,val_irv2_class_loss,val_irv2_class_top_k_categorical_accuracy,val_irv2_color_loss,val_loss
+0,0.21067051587410537,3.505169409393541,0.48426299410904433,0.0026586802690760445,3.5078280895986484,0.24901088382625025,3.200417287979352,0.5457467863927609,0.002553387234608332,3.2029706733752663
