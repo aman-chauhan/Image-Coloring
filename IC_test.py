@@ -149,6 +149,8 @@ def all(root, key):
     for _, _, files in os.walk('weights'):
         model_names = [x.strip().split('.')[0] for x in files if not x.startswith('.')]
 
+    model_names = [x for x in model_names if not x.startswith('inception')]
+
     _, filenames = get_truth_images(root, 256)
 
     imgs = None
