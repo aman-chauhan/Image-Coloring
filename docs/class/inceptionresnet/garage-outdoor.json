@@ -1,7 +1,7 @@
 {
-    "driveway": 1.462043635547161,
-    "garage-outdoor": 92.09402203559875,
-    "loading_dock": 0.3432435914874077,
-    "manufactured_home": 1.963181421160698,
-    "ski_resort": 0.24394828360527754
+    "driveway": 0.11948340106755495,
+    "garage-indoor": 0.08348289411514997,
+    "garage-outdoor": 99.40779209136963,
+    "manufactured_home": 0.11390752624720335,
+    "residential_neighborhood": 0.05088899051770568
 }
