@@ -1,7 +1,7 @@
 {
-    "driveway": 0.5939822178333998,
-    "garage-indoor": 0.17093608621507883,
-    "garage-outdoor": 98.6804723739624,
-    "loading_dock": 0.05333058652468026,
-    "residential_neighborhood": 0.04801650648005307
+    "alley": 0.1339051639661193,
+    "driveway": 2.0145082846283913,
+    "garage-indoor": 0.4429205320775509,
+    "garage-outdoor": 95.5639660358429,
+    "residential_neighborhood": 0.2931504277512431
 }
